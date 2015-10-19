@@ -1,0 +1,42 @@
+{
+  "name": "webpack-express-boilerplate",
+  "version": "0.1.0",
+  "description": "A boilerplate for running a Webpack workflow in Node express",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christianalfoni/webpack-express-boilerplate.git"
+  },
+  "keywords": [
+    "express",
+    "webpack",
+    "node"
+  ],
+  "author": "Dominic Tobias",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/christianalfoni/webpack-express-boilerplate/issues"
+  },
+  "homepage": "https://github.com/christianalfoni/webpack-express-boilerplate",
+  "scripts": {
+    "start": "node --es_staging server",
+    "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "history": "^1.12.5",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-router": "1.0.0-rc3"
+  },
+  "devDependencies": {
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
+    "babel-plugin-react-transform": "^1.1.1",
+    "del": "^2.0.2",
+    "react-transform-hmr": "^1.0.1",
+    "webpack": "^1.12.2",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.4.1"
+  }
+}
