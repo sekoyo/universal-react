@@ -1,1 +1,1 @@
-require('./Router');
+import './Router'

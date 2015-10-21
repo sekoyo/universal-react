@@ -41,7 +41,10 @@ module.exports = {
 		loaders: [{
 			test: /\.js?$/,
 			exclude: /node_modules/,
-			loader: 'babel?cacheDirectory'
+			loader: 'babel-loader',
+			query: {
+				stage: 0
+			}
 		}]
 	}
 };

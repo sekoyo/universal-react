@@ -29,10 +29,11 @@ module.exports = {
 			loader: 'babel-loader',
 			query: {
 				stage: 0,
-				  "env": {
+				cacheDirectory: true,
+				env: {
 					// Only enable it when process.env.NODE_ENV is 'development' or undefined
 					development: {
-						plugins: ["react-transform"],
+						plugins: ['react-transform'],
 						extra: {
 							'react-transform': {
 								transforms: [{
