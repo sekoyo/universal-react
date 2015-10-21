@@ -14,7 +14,7 @@ Too many starters kits are opinionated about things developers like to solve the
 
 ## Adding routes
 
-Add your routes in `Routes.js`. See the guides at [react-router]https://github.com/rackt/react-router).
+Add your routes in `Routes.js`. See the guides at [react-router](https://github.com/rackt/react-router).
 
 ## Title and Meta
 
