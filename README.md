@@ -54,7 +54,7 @@ static requestState() {
 				throw new Error('Bad response from server');
 			}
 			return response.json();
-		})
+		});
 }
 ```
 
@@ -67,7 +67,7 @@ constructor(props, context) {
 	if (!context.getInitialData(this)) {
 		Users.requestState().then(users => {
 			this.setState({ users: users });
-		})
+		});
 	}
 
 	this.state = {

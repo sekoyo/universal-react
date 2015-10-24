@@ -22,7 +22,7 @@ class Users extends Component {
 					throw new Error('Bad response from server');
 				}
 				return response.json();
-			})
+			});
 	}
 
 	constructor(props, context) {
