@@ -1,6 +1,6 @@
 # Universal React
 
-This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app without making decisions too many decisions for you (e.g. flux, layouts, testing, linting). The aim is to keep the codebase simple and readable for you to extend.
+This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app without making extraneous decisions for you (e.g. flux,	 layouts, testing, linting). The aim is to keep the codebase simple and readable for you to extend.
 
 ## Features
 
@@ -11,6 +11,12 @@ This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal
 - No other templating engines - React from root down
 - 404 and redirect handling
 
+## Install & run
+
+```
+npm i && npm start
+```
+
 ## Adding routes
 
 Add your routes in `Routes.js`.
@@ -19,7 +25,7 @@ Add your routes in `Routes.js`.
 <Route path='users' component={Users} onEnter={onRouteEnter} />
 ```
 
-The `onEnter` callback is used to update the title on the client, otherwise it could be omitted.
+The `onEnter` callback is used to update the title on the client, otherwise it can be omitted.
 
 ## Title and Meta
 
@@ -52,7 +58,7 @@ static requestState() {
 }
 ```
 
-If your component defines this and it's the first route (loaded by the server), then the data will already be available via `context.getInitialData(this)`, e.g:
+If your component has a `requestState` method and it's the first route (pre-rendered by the server), then the data will already be available via `context.getInitialData(this)` (or `this.context` outside the constructor), e.g:
 
 ```js
 constructor(props, context) {

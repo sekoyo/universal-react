@@ -1,5 +1,5 @@
 require('babel/register')({
-  stage: 0
+	stage: 0
 });
 
 var path = require('path');
@@ -11,7 +11,7 @@ var config = require('./webpack.config.js');
 var Router = require('./app/Router');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3020 : process.env.PORT;
+const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 
 app.use(express.static(path.resolve(__dirname, 'dist')));
