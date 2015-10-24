@@ -75,3 +75,5 @@ constructor(props, context) {
 	}
 }
 ```
+
+This ensures the server and client renders are isomorphic.
