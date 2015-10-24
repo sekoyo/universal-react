@@ -1,20 +1,25 @@
 # Universal React
 
-**Note:** This package is still in development but will be released soon.
-
-Too many starters kits are opinionated about things developers like to solve themselves - CSS, layout, test frameworks, state architecture (e.g. Flux). This boilerplate instead focuses on hard-to-solve universal (A.K.A isomorphic) problems. Namely title and meta for routes, universal routing, and universal data fetching and rehydration on the client.
+This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app without making decisions too many decisions for you (e.g. flux, layouts, testing, linting). The aim is to keep the codebase simple and readable for you to extend.
 
 ## Features
 
-- Universal routing using
+- Universal routing ([react-router](https://github.com/rackt/react-router))
 - Hot reloading
-- Universal title & meta
-- Universal data fetching/rehydration on the client
-- 100% React components (no Jade, Handlebars etc for the server)
+- Title and meta, overridable by route components
+- Universal data fetching/rehydration on the client ([isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch))
+- No other templating engines - React from root down
+- 404 and redirect handling
 
 ## Adding routes
 
-Add your routes in `Routes.js`. See the guides at [react-router](https://github.com/rackt/react-router).
+Add your routes in `Routes.js`.
+
+```js
+<Route path='users' component={Users} onEnter={onRouteEnter} />
+```
+
+The `onEnter` callback is used to update the title on the client, otherwise it could be omitted.
 
 ## Title and Meta
 
@@ -29,8 +34,38 @@ static meta = [{
 }]
 ```
 
-However any route component can override these values (see `Users.js`).
+However any route component can override these values (see `Users.js`). The properties can also be functions.
 
 ## Data fetching and client hydration
 
-This is currently under development.
+If the route component needs to fetch data it should define a static `requestState` method which returns a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (or a [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) for multiple requests):
+
+```js
+static requestState() {
+	return fetch('http://jsonplaceholder.typicode.com/users')
+		.then(function(response) {
+			if (response.status >= 400) {
+				throw new Error('Bad response from server');
+			}
+			return response.json();
+		})
+}
+```
+
+If your component defines this and it's the first route (loaded by the server), then the data will already be available via `context.getInitialData(this)`, e.g:
+
+```js
+constructor(props, context) {
+	super(props, context);
+
+	if (!context.getInitialData(this)) {
+		Users.requestState().then(users => {
+			this.setState({ users: users });
+		}.bind(this))
+	}
+
+	this.state = {
+		users: context.getInitialData(this)
+	}
+}
+```

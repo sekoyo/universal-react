@@ -1,25 +1,29 @@
 {
-  "name": "webpack-express-boilerplate",
+  "name": "universal-react",
   "version": "0.1.0",
-  "description": "A boilerplate for running a Webpack workflow in Node express",
+  "description": "A boilerplate for running React or the server and client",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/christianalfoni/webpack-express-boilerplate.git"
+    "url": "https://github.com/DominicTobias/universal-react.git"
   },
   "keywords": [
+    "react",
+    "isomorphic",
+    "universal",
     "express",
-    "webpack",
-    "node"
+    "routing",
+    "server",
+    "hydration"
   ],
-  "author": "Dominic Tobias",
+  "author": "Dominic Tobias <dominic.tobias@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/christianalfoni/webpack-express-boilerplate/issues"
+    "url": "https://github.com/DominicTobias/universal-react/issues"
   },
-  "homepage": "https://github.com/christianalfoni/webpack-express-boilerplate",
+  "homepage": "https://github.com/DominicTobias/universal-react",
   "scripts": {
-    "start": "node --es_staging server",
+    "start": "node server",
     "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors"
   },
   "dependencies": {

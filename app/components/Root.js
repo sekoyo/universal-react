@@ -1,45 +1,44 @@
-import React from 'react'
+import React, { Component } from 'react'
+import result from '../utils/result'
 
-class Root extends React.Component {
+class Root extends Component {
 
-	createMeta() {
+	renderMeta() {
 		if (this.props.meta) {
-			return this.props.meta.map((attrs, i) => {
+			let meta = result(this.props, 'meta');
+			return meta.map((attrs, i) => {
 				return <meta key={i} {...attrs} />;
 			});
 		}
 	}
 
-	createInitialData() {
+	renderInitialData() {
 		if (this.props.initialData) {
+			let innerHtml = `window.__initialData__ = ${JSON.stringify(this.props.initialData)}`;
 			return (
-				<script id='initialData' type='application/json' 
-					dangerouslySetInnerHTML={{__html: this.props.initialData}} />
+				<script dangerouslySetInnerHTML={{__html: innerHtml}} />
 			);
 		}
 	}
 
 	render() {
-		const bundlePath = this.props.development ? 'bundle.js' : 'bundle.min.js';
-
-		let routeMeta = this.createMeta();
-		let initialData = this.createInitialData();
+		const isDeveloping = process.env.NODE_ENV !== 'production' ? true : false;
 
 		return (
 			<html>
 				<head>
 					<meta charSet='utf-8' />
     				<meta name='viewport' content='width=device-width, initial-scale=1' />
-    				{routeMeta}
-					<title>{this.props.pageTitle}</title>
-					{initialData}
+    				{this.renderMeta()}
+					<title>{result(this.props, 'pageTitle')}</title>
 				</head>
 				<body>
 					<div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />
-					<script src={bundlePath}></script>
+					{this.renderInitialData()}
+					<script src={isDeveloping ? 'bundle.js' : 'bundle.min.js'}></script>
 				</body>
 			</html>
-		)
+		);
 	}
 }
 

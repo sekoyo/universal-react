@@ -1,4 +1,4 @@
-function getPropsFromRoute({ routes }, componentProps) {
+export default function getPropsFromRoute({ routes }, componentProps) {
 	let props = {};
 	let lastRoute = routes[routes.length - 1];
 
@@ -14,5 +14,3 @@ function getPropsFromRoute({ routes }, componentProps) {
 
 	return props;
 }
-
-export default getPropsFromRoute;

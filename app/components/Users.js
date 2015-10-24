@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import Fetch from 'isomorphic-fetch'
-import getInitialData from '../utils/getInitialData'
+import isClient from '../utils/isClient'
 
-class Users extends React.Component {
+class Users extends Component {
 
 	static pageTitle = 'MyApp - Users'
 
@@ -11,7 +11,11 @@ class Users extends React.Component {
 		content: 'A list of our users'
 	}]
 
-	static requestForProps() {
+	static contextTypes = {
+		getInitialData: PropTypes.func
+	}
+
+	static requestState() {
 		return fetch('http://jsonplaceholder.typicode.com/users')
 			.then(function(response) {
 				if (response.status >= 400) {
@@ -21,38 +25,41 @@ class Users extends React.Component {
 			})
 	}
 
-	constructor(props) {
-		super(props);
+	constructor(props, context) {
+		super(props, context);
 
-		console.log('userData:', props);
+		if (!context.getInitialData(this)) {
+			Users.requestState().then(users => {
+				this.setState({ users: users });
+			}.bind(this))
+		}
 
-		// let userData = getInitialData();
+		this.state = {
+			users: context.getInitialData(this)
+		}
+	}
 
-		// console.log('userData', userData);
-
-		// if (userData) {
-		// 	this.state = {
-		// 		users: userData
-		// 	}			
-		// } else {
-		// 	Users.requestForProps().then(users => {
-		// 		this.setState({
-		// 			users: users
-		// 		});
-		// 	}.bind(this));
-		// }
-
+	renderUsers() {
+		if (this.state.users) {
+			return (
+				<ul>
+					{this.state.users.map(user => {
+						return <li key={user.id}>{user.name}</li>;
+					})}
+				</ul>
+			)
+		} else {
+			return (
+				<p>Fetching...</p>
+			);
+		}
 	}
 
 	render() {
-		// {this.state.users.map(user => {
-		// 	<ul>
-		// 		<li>{user.name}</li>
-		// 	</ul>
-		// })}
 		return (
 			<div>
 				<h5>Users:</h5>
+				{this.renderUsers()}
 			</div>
 		)
 	}

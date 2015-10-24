@@ -30,21 +30,16 @@ module.exports = {
 			query: {
 				stage: 0,
 				cacheDirectory: true,
-				env: {
-					// Only enable it when process.env.NODE_ENV is 'development' or undefined
-					development: {
-						plugins: ['react-transform'],
-						extra: {
-							'react-transform': {
-								transforms: [{
-									transform: 'react-transform-hmr',
-									// If you use React Native, pass "react-native" instead:
-									imports: ['react'],
-									// This is important for Webpack HMR:
-									locals: ['module']
-								}]
-							}
-						}
+				plugins: ['react-transform'],
+				extra: {
+					'react-transform': {
+						transforms: [{
+							transform: 'react-transform-hmr',
+							// If you use React Native, pass "react-native" instead:
+							imports: ['react'],
+							// This is important for Webpack HMR:
+							locals: ['module']
+						}]
 					}
 				}
 			}

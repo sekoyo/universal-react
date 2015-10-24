@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-class App extends React.Component {
+class App extends Component {
 
 	// These will be used if a deeper route component hasn't defined them.
 	static pageTitle = 'MyApp'
