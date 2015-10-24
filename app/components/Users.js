@@ -31,7 +31,7 @@ class Users extends Component {
 		if (!context.getInitialData(this)) {
 			Users.requestState().then(users => {
 				this.setState({ users: users });
-			}.bind(this))
+			});
 		}
 
 		this.state = {
