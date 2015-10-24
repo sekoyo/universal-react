@@ -1,7 +1,7 @@
 {
   "name": "universal-react",
   "version": "0.1.0",
-  "description": "A boilerplate for running React or the server and client",
+  "description": "A universal react starter MVP, with routing, meta, title, and data features",
   "main": "server.js",
   "repository": {
     "type": "git",
