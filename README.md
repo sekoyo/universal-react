@@ -11,11 +11,15 @@ This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal
 - No other templating engines - React from root down
 - 404 and redirect handling
 
+As you're more than likely to want to style your app you can also import scss (see `App.js`). It's easy to add css, less, or whatever you like using a webpack loader.
+
 ## Install & run
 
 ```
 npm i && npm start
 ```
+
+Go to `http://localhost:3000/users` to see isomorphic data fetching.
 
 ## Adding routes
 

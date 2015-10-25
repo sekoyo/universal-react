@@ -6,13 +6,12 @@ var webpack = require('webpack');
 module.exports = {
 	devtool: '#source-map',
 	entry: [
-		'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+		'webpack-hot-middleware/client?path=/__webpack_hmr',
 		path.join(__dirname, 'app/index.js')
 	],
 	output: {
 		path: path.join(__dirname, '/dist/'),
-		filename: 'bundle.js',
-		publicPath: '/'
+		filename: 'bundle.js'
 	},
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
@@ -25,8 +24,8 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.js?$/,
-			exclude: /node_modules/,
 			loader: 'babel-loader',
+			include: path.join(__dirname, 'app'),
 			query: {
 				stage: 0,
 				cacheDirectory: true,
@@ -43,6 +42,14 @@ module.exports = {
 					}
 				}
 			}
+		}, {
+			test: /\.scss$/,
+			loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
+			include: path.join(__dirname, 'app')
+		},  {
+			test: /\.(jpe?g|png|eot|woff|ttf|gif|svg)(\?.*)?$/i,
+			loader: 'file-loader',
+			include: path.join(__dirname, 'app')
 		}]
 	}
 };

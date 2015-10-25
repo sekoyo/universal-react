@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import './scss/App.scss'
 
 class App extends Component {
 
@@ -17,7 +18,7 @@ class App extends Component {
 				<nav>
 					<ul>
 						<li><Link to="/">Home</Link></li>
-          				<li><Link to="/users">Users</Link></li>
+						<li><Link to="/users">Users</Link></li>
 					</ul>
 				</nav>
 				<div className="route-content">

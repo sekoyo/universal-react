@@ -22,7 +22,7 @@ if (isClient) {
 }
 
 function getContentWithRoot(content, rootProps, initialData) {
-	return renderToStaticMarkup(
+	return '<!doctype html>\n' + renderToStaticMarkup(
 		<Root content={content} initialData={initialData} {...rootProps} />
 	);
 }

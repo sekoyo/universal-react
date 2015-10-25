@@ -22,15 +22,16 @@ class Root extends Component {
 	}
 
 	render() {
-		const isDeveloping = process.env.NODE_ENV !== 'production' ? true : false;
+		const isDeveloping = process.env.NODE_ENV !== 'production';
 
 		return (
 			<html>
 				<head>
 					<meta charSet='utf-8' />
-    				<meta name='viewport' content='width=device-width, initial-scale=1' />
-    				{this.renderMeta()}
+					<meta name='viewport' content='width=device-width, initial-scale=1' />
+					{this.renderMeta()}
 					<title>{result(this.props, 'pageTitle')}</title>
+					{!isDeveloping ? <link rel="stylesheet" type="text/css" href="style.min.css" /> : null}
 				</head>
 				<body>
 					<div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />

@@ -2,6 +2,10 @@ require('babel/register')({
 	stage: 0
 });
 
+require.extensions['.scss'] = function() {
+	return;
+};
+
 var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
