@@ -31,7 +31,7 @@ class Root extends Component {
 					<meta name='viewport' content='width=device-width, initial-scale=1' />
 					{this.renderMeta()}
 					<title>{result(this.props, 'pageTitle')}</title>
-					{!isDeveloping ? <link rel="stylesheet" type="text/css" href="style.min.css" /> : null}
+					{!isDeveloping ? <link rel='stylesheet' type='text/css' href='style.min.css' /> : null}
 				</head>
 				<body>
 					<div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />

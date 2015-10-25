@@ -17,11 +17,11 @@ class App extends Component {
 			<div>
 				<nav>
 					<ul>
-						<li><Link to="/">Home</Link></li>
-						<li><Link to="/users">Users</Link></li>
+						<li><Link to='/'>Home</Link></li>
+						<li><Link to='/users'>Users</Link></li>
 					</ul>
 				</nav>
-				<div className="route-content">
+				<div className='route-content'>
 					{this.props.children}
 				</div>
 			</div>
