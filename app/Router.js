@@ -55,7 +55,7 @@ function handleRedirect(res, redirectLocation) {
 
 function handleRoute(res, renderProps) {
 
-	const isDeveloping = process.env.NODE_ENV !== 'production' ? true : false;
+	const isDeveloping = process.env.NODE_ENV !== 'production';
 	const routeProps = getPropsFromRoute(renderProps, ['pageTitle', 'meta', 'requestState']);
 
 	function renderPage(response) {
