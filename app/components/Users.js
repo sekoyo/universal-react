@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-fetch'
 import isClient from '../utils/isClient'
 
 class Users extends Component {
