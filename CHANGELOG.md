@@ -5,4 +5,4 @@
 	- Fix wrong error route handler (was using 404)
 
 0.2.0
-	- Use react-helmet to manage title and meta
+	- Use react-helmet to manage title and meta (instead of custom)
