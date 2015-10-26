@@ -77,7 +77,7 @@ function ServerRouter(req, res) {
 
 	match({ routes: Routes, location: req.url }, (error, redirectLocation, renderProps) => {
 		if (error) {
-			handle404(error);
+			handleError(error);
 		} else if (res, redirectLocation) {
 			handleRedirect(res, redirectLocation)
 		} else if (renderProps) {
