@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createHistory } from 'history'
 import { Router, match, RoutingContext } from 'react-router'
+import Helmet from 'react-helmet'
 import Routes from './Routes'
 import Provider from './Provider'
 import Root from './components/Root'
@@ -21,27 +22,22 @@ if (isClient) {
 	);
 }
 
-function getContentWithRoot(content, rootProps, initialData) {
-	return '<!doctype html>\n' + renderToStaticMarkup(
-		<Root content={content} initialData={initialData} {...rootProps} />
-	);
-}
-
-function getComponentContent(Component, props, initialData) {
-	return renderToStaticMarkup(
+function renderComponentWithRoot(Component, componentProps, initialData) {
+	const componentHtml = renderToStaticMarkup(
 		<Provider initialData={initialData}> 
-			<Component {...props} />
+			<Component {...componentProps} />
 		</Provider>
+	);
+
+	const head = Helmet.rewind();
+
+	return '<!doctype html>\n' + renderToStaticMarkup(
+		<Root content={componentHtml} initialData={initialData} head={head} />
 	);
 }
 
 function handle404(res) {
-	const content = getComponentContent(NoMatch);
-	const wholeHtml = getContentWithRoot(content, {
-		meta: NoMatch.meta,
-		pageTitle: NoMatch.pageTitle
-	});
-
+	const wholeHtml = renderComponentWithRoot(NoMatch);;
 	res.status(404).send(wholeHtml);
 }
 
@@ -56,13 +52,10 @@ function handleRedirect(res, redirectLocation) {
 function handleRoute(res, renderProps) {
 
 	const isDeveloping = process.env.NODE_ENV !== 'production';
-	const routeProps = getPropsFromRoute(renderProps, ['pageTitle', 'meta', 'requestState']);
+	const routeProps = getPropsFromRoute(renderProps, ['requestState']);
 
 	function renderPage(response) {
-
-		const content = getComponentContent(RoutingContext, renderProps, response);
-		const wholeHtml = getContentWithRoot(content, routeProps, response);
-
+		const wholeHtml = renderComponentWithRoot(RoutingContext, renderProps, response);
 		res.status(200).send(wholeHtml);
 	}
 

@@ -6,7 +6,7 @@ This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal
 
 - Universal routing ([react-router](https://github.com/rackt/react-router))
 - Hot reloading
-- Title and meta, overridable by route components
+- Title, meta, css, scripts overridable by each component ([react-helmet](https://github.com/nfl/react-helmet))
 - Universal data fetching/rehydration on the client ([isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch))
 - No other templating engines - React from root down
 - 404 and redirect handling
@@ -26,25 +26,13 @@ Go to `http://localhost:3000/users` to see isomorphic data fetching.
 Add your routes in `Routes.js`.
 
 ```js
-<Route path='users' component={Users} onEnter={onRouteEnter} />
+<Route path='users' component={Users} />
 ```
-
-The `onEnter` callback is used to update the title on the client, otherwise it can be omitted.
 
 ## Title and Meta
 
-The parent `App.js` defines the fallback title and meta as static properties in the component:
 
-```js
-static pageTitle = 'MyApp'
-
-static meta = [{
-	name: 'description',
-	content: 'My super dooper dope app'
-}]
-```
-
-However any route component can override these values (see `Users.js`). The properties can also be functions.
+The parent `App.js` defines the base title and meta in a `Helmet` component. Any sub-component can override/add properties (even adding scripts and css). See the [react-helmet docs](https://github.com/nfl/react-helmet) for more info.
 
 ## Data fetching and client hydration
 
