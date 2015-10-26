@@ -1,15 +1,8 @@
-import React, { Component, PropTypes } from 'react'
 import fetch from 'isomorphic-fetch'
-import isClient from '../utils/isClient'
+import React, { Component, PropTypes } from 'react'
+import Helmet from 'react-helmet'
 
 class Users extends Component {
-
-	static pageTitle = 'MyApp - Users'
-
-	static meta = [{
-		name: 'description',
-		content: 'A list of our users'
-	}]
 
 	static contextTypes = {
 		getInitialData: PropTypes.func
@@ -58,6 +51,12 @@ class Users extends Component {
 	render() {
 		return (
 			<div>
+				<Helmet
+					title='Users'
+					meta={[
+						{'name': 'description', 'content': 'A list of our users'}
+					]}
+				/>
 				<h5>Users:</h5>
 				{this.renderUsers()}
 			</div>

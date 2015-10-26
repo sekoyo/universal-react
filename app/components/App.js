@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import Helmet from 'react-helmet'
 import './scss/App.scss'
 
 class App extends Component {
 
-	// These will be used if a deeper route component hasn't defined them.
-	static pageTitle = 'MyApp'
-
-	static meta = [{
-		name: 'description',
-		content: 'My super dooper dope app'
-	}]
-
 	render() {
 		return (
 			<div>
+				<Helmet
+					title='MyApp'
+					titleTemplate='MyApp - %s'
+					meta={[
+						{'char-set': 'utf-8'},
+						{'name': 'description', 'content': 'My super dooper dope app'}
+					]}
+				/>
 				<nav>
 					<ul>
 						<li><Link to='/'>Home</Link></li>
