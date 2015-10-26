@@ -6,7 +6,7 @@ This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal
 
 - Universal routing ([react-router](https://github.com/rackt/react-router))
 - Hot reloading
-- Title, meta, css, scripts overridable by each component ([react-helmet](https://github.com/nfl/react-helmet))
+- Title, meta, css, and scripts overridable by each component ([react-helmet](https://github.com/nfl/react-helmet))
 - Universal data fetching/rehydration on the client ([isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch))
 - No other templating engines - React from root down
 - 404 and redirect handling
