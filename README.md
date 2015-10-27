@@ -53,6 +53,10 @@ static requestState() {
 If your component has a `requestState` method and it's the first route (pre-rendered by the server), then the data will already be available via `context.getInitialData(this)` (or `this.context` outside the constructor), e.g:
 
 ```js
+static contextTypes = {
+	getInitialData: PropTypes.func
+}
+
 constructor(props, context) {
 	super(props, context);
 
