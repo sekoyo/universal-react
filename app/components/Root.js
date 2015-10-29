@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import result from '../utils/result'
 
 class Root extends Component {
 
