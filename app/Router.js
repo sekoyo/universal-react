@@ -10,8 +10,7 @@ import Routes from './Routes'
 import Provider from './Provider'
 import Root from './components/Root'
 import NoMatch from './components/NoMatch'
-import isClient from './utils/isClient'
-import getPropsFromRoute from './utils/getPropsFromRoute'
+import { isClient, getPropsFromRoute } from './utils'
 
 if (isClient) {
 	ReactDOM.render(

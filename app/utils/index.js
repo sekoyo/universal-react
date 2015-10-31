@@ -1,6 +1,6 @@
-export default function getPropsFromRoute({ routes }, componentProps) {
+export function getPropsFromRoute({ routes }, componentProps) {
 	let props = {};
-	let lastRoute = routes[routes.length - 1];
+	const lastRoute = routes[routes.length - 1];
 
 	routes.reduceRight((prevRoute, currRoute) => {
 	   
@@ -14,3 +14,5 @@ export default function getPropsFromRoute({ routes }, componentProps) {
 
 	return props;
 }
+
+export const isClient = (typeof document !== 'undefined');
