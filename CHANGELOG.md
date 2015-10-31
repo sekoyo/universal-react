@@ -6,3 +6,6 @@
 
 0.2.0
 	- Use react-helmet to manage title and meta (instead of custom)
+
+0.2.1
+	- Minor cleanup of some now unused code and put utils in one file
