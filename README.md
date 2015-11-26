@@ -2,6 +2,8 @@
 
 This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app without making extraneous decisions for you (e.g. flux,	 layouts, testing, styling). The aim is to keep the codebase simple and readable for you to extend.
 
+[![Universal React on NPM](https://img.shields.io/npm/v/universal-react.svg)](https://www.npmjs.com/package/universal-react)
+
 ## Features
 
 - Universal routing ([react-router](https://github.com/rackt/react-router))
