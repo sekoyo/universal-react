@@ -12,3 +12,6 @@
 
 0.2.2
 	- Fixed server so that is uses babel-core instead of babel (which is deprecated and also not delcared as a dep)
+
+0.2.3
+	- Make bundle path absolute so it works for deep urls

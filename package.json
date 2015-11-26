@@ -1,6 +1,6 @@
 {
   "name": "universal-react",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A universal react starter, with routing, meta, title, and data features",
   "main": "server.js",
   "repository": {
