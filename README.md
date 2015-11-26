@@ -1,6 +1,6 @@
 # Universal React
 
-This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app without making extraneous decisions for you (e.g. flux,	 layouts, testing). The aim is to keep the codebase simple and readable for you to extend.
+This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app without making extraneous decisions for you (e.g. flux,	 layouts, testing, styling). The aim is to keep the codebase simple and readable for you to extend.
 
 ## Features
 
