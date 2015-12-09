@@ -12,18 +12,17 @@ var webpack = require('webpack');
 var webpackMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config.js');
-var Router = require('./app/Router');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
-const app = express();
+const server = express();
 
-app.use(express.static(path.resolve(__dirname, 'dist')));
+server.use(express.static(path.resolve(__dirname, 'dist')));
 
 if (isDeveloping) {
 	const compiler = webpack(config);
 
-	app.use(webpackMiddleware(compiler, {
+	server.use(webpackMiddleware(compiler, {
 		publicpath: config.output.publicpath,
 		contentBase: 'app',
 		watch: true,
@@ -37,14 +36,22 @@ if (isDeveloping) {
 		}
 	}));
 
-	app.use(webpackHotMiddleware(compiler, {
+	server.use(webpackHotMiddleware(compiler, {
 		path: '/__webpack_hmr'
 	}));
 }
 
-app.get('*', Router);
+global.ENV = {
+	mockApi: true
+};
 
-app.listen(port, 'localhost', function onStart(err) {
+var app = require('./app');
+
+console.log('app:', app);
+
+server.get('*', app.serverMiddleware);
+
+server.listen(port, 'localhost', function onStart(err) {
 	if (err) {
 		console.log(err);
 	}

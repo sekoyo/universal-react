@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router'
-import Helmet from 'react-helmet'
-import './scss/App.scss'
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+import Helmet from 'react-helmet';
+import './scss/App.scss';
 
 class App extends Component {
 

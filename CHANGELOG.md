@@ -12,3 +12,6 @@
 
 0.2.2
 	- Fixed server so that is uses babel-core instead of babel (which is deprecated and also not delcared as a dep)
+
+1.0.0
+	- Use Redux, the simplicity was nice but to scale a central store to dispatch to makes good sense.

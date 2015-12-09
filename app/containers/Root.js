@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class Root extends Component {
 
-	renderInitialData() {
-		if (this.props.initialData) {
-			let innerHtml = `window.__initialData__ = ${JSON.stringify(this.props.initialData)}`;
+	renderInitialState() {
+		if (this.props.initialState) {
+			let innerHtml = `window.__INITIAL_STATE__ = ${JSON.stringify(this.props.initialState)}`;
 			return (
 				<script dangerouslySetInnerHTML={{__html: innerHtml}} />
 			);
@@ -24,9 +24,9 @@ class Root extends Component {
 				</head>
 				<body>
 					<div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />
-					{this.renderInitialData()}
+					{this.renderInitialState()}
 					{head.script.toComponent()}
-					<script src={isDeveloping ? 'bundle.js' : 'bundle.min.js'}></script>
+					<script src={isDeveloping ? '/bundle.js' : '/bundle.min.js'}></script>
 				</body>
 			</html>
 		);
