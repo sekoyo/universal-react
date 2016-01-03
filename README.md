@@ -49,12 +49,23 @@ Version [0.2.3](https://github.com/DominicTobias/universal-react/releases/tag/0.
 
 Read the [Redux](https://rackt.github.io/redux/) guide if you are new to redux. Write Redux actions and stores as normal, and if the action creator is asynchronous then it should return a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (or a [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)) in the inner function.
 
-On a router component you need to declare the actions in an array that must be executed in order for the component to be ready.
+On a router component you need to declare the actions in an array that must be executed in order for the component to be ready:
 
 ```js
 static readyOnActions(dispatch, location, params) {
 	return [
 		() => dispatch(UserActions.fetchUserIfNeeded(params.id))
 	];
+}
+```
+
+You should also invoke the actions in `componentDidMount` (or the constructor or `componentWillMount`). This ensures that if the component is reached on the client, then the same actions will be invoked:
+
+```js
+componentWillMount() {
+	const { dispatch, location, params } = this.props;
+
+	User.readyOnActions(dispatch, location, params)
+		.forEach(action => action());
 }
 ```

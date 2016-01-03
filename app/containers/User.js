@@ -15,9 +15,7 @@ class User extends Component {
 		];
 	}
 
-	constructor(props) {
-		super(props);
-
+	componentWillMount() {
 		const { dispatch, location, params } = this.props;
 
 		User.readyOnActions(dispatch, location, params)
