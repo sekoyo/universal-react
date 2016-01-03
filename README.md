@@ -49,12 +49,12 @@ Version [0.2.3](https://github.com/DominicTobias/universal-react/releases/tag/0.
 
 Read the [Redux](https://rackt.github.io/redux/) guide if you are new to redux. Write Redux actions and stores as normal, and if the action creator is asynchronous then it should return a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (or a [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)) in the inner function.
 
-On a connected top-level component, you need to declare the actions in an array that must be executed in order for the component to be ready:
+On a router component you need to declare the actions in an array that must be executed in order for the component to be ready.
 
 ```js
-static readyOnActions(dispatch) {
+static readyOnActions(dispatch, location, params) {
 	return [
-		() => dispatch(UsersActions.fetchUsers())
+		() => dispatch(UserActions.fetchUserIfNeeded(params.id))
 	];
 }
 ```
