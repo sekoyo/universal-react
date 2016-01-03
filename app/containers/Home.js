@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as UsersActions from '../actions/users';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 // @connect(state => { users: state.users })
 class Home extends Component {
@@ -25,9 +26,7 @@ class Home extends Component {
 
 		if (users.readyState === UsersActions.USERS_INVALID ||
 			users.readyState === UsersActions.USERS_FETCHING) {
-			return (
-				<p>Fetching...</p>
-			);
+			return <LoadingIndicator />;
 		}
 
 		if (users.readyState === UsersActions.USERS_FETCH_FAILED) {

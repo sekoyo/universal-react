@@ -3,6 +3,8 @@ import Helmet from 'react-helmet';
 import { dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as UserActions from '../actions/user';
+import UserCard from '../components/UserCard';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 // @connect(state => { user: state.user })
 class User extends Component {
@@ -40,9 +42,7 @@ class User extends Component {
 		const user = this.getUser();
 
 		if (!user || user.readyState === UserActions.USER_FETCHING) {
-			return (
-				<p>Fetching...</p>
-			);
+			return <LoadingIndicator />;
 		}
 
 		if (user.readyState === UserActions.USER_FETCH_FAILED) {
@@ -51,12 +51,7 @@ class User extends Component {
 			);
 		}
 
-		return (
-			<ul>
-				<li>Name: {user.data.name}</li>
-				<li>Email: {user.data.email}</li>
-			</ul>
-		);
+		return <UserCard user={user.data} />;
 	}
 
 	render() {
