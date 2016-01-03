@@ -19,7 +19,7 @@ class Root extends Component {
 	}
 
 	render() {
-		const isDeveloping = process.env.NODE_ENV !== 'production';
+		const isLocal = process.env.NODE_ENV === undefined;
 		const head = this.props.head;
 		
 		return (
@@ -28,13 +28,14 @@ class Root extends Component {
 					{head.title.toComponent()}
 					{head.meta.toComponent()}
 					{head.link.toComponent()}
+					{!isLocal && <link rel='stylesheet' type='text/css' href='/style.min.css' />}
 				</head>
 				<body>
 					<div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />
 					{this.renderInitialState()}
 					{this.renderConfig()}
 					{head.script.toComponent()}
-					<script src={isDeveloping ? '/bundle.js' : '/bundle.min.js'}></script>
+					<script src={isLocal ? '/bundle.js' : '/bundle.min.js'}></script>
 				</body>
 			</html>
 		);

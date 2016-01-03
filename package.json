@@ -24,6 +24,7 @@
   "homepage": "https://github.com/DominicTobias/universal-react",
   "scripts": {
     "start": "node server",
+    "start-prod": "NODE_ENV=production PORT=3000 node server",
     "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors"
   },
   "dependencies": {

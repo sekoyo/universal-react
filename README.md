@@ -24,6 +24,20 @@ npm i && npm start
 
 Go to `http://localhost:3000/`.
 
+## Build
+
+```
+npm run build
+```
+
+This will create a `dist/` folder with a `bundle.min.js` and `style.min.css` which will be used on production servers. Expect more finessing in future versions.
+
+To test your app as if it's running on a production server (so far as using the correct config and the minified files) run:
+
+```
+npm run start-prod
+```
+
 ## Adding routes
 
 Add your routes in `Routes.js`.
