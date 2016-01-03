@@ -40,6 +40,10 @@ The parent `App.js` defines the base title and meta in a `Helmet` component. Any
 
 You can store app settings under `app/config/`. These are available under the global variable `CONFIG`. A file matching `process.env.NODE_ENV` will be loaded, for example `app/config/production.js`. If `process.env.NODE_ENV` is undefined it will fallback to `app/config/local.js`.
 
+## Pre Flux
+
+Version [0.2.3](https://github.com/DominicTobias/universal-react/releases/tag/0.2.3) is a simpler isomorphic base which doesn't implement flux. If you're interested in that [have a look at the source](https://github.com/DominicTobias/universal-react/tree/73a61c1c554684583d080f5496ed21b78c62f1a0).
+
 ## Data fetching and client hydration
 
 Read the [Redux](https://rackt.github.io/redux/) guide if you are new to redux. Write Redux actions and stores as normal, and if the action creator is asynchronous then it should return a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (or a [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) in the inner function.
