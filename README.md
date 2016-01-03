@@ -30,7 +30,7 @@ Go to `http://localhost:3000/`.
 npm run build
 ```
 
-This will create a `dist/` folder with a `bundle.min.js` and `style.min.css` which will be used on production servers. Expect more finessing in future versions.
+This will create a `dist/` folder with a `bundle.min.js` and `style.min.css` which will be used on any environment which isn't undefined (i.e. not local).
 
 To test your app as if it's running on a production server (so far as using the correct config and the minified files) run:
 
