@@ -16,11 +16,9 @@ class CleanPlugin {
 }
 
 module.exports = {
-	entry: [
-		path.join(__dirname, 'app/index.js')
-	],
+	entry: path.join(__dirname, 'app/index'),
 	output: {
-		path: path.join(__dirname, '/dist/'),
+		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.min.js'
 	},
 	plugins: [
@@ -34,19 +32,13 @@ module.exports = {
 				warnings: false,
 				screw_ie8: true
 			}
-		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
 		})
 	],
 	module: {
 		loaders: [{
 			test: /\.js?$/,
 			loader: 'babel-loader',
-			include: path.join(__dirname, 'app'),
-			query: {
-				stage: 0
-			}
+			include: path.join(__dirname, 'app')
 		}, {
 			test: /\.scss$/,
 			loader: ExtractTextPlugin.extract('style', 'css', 'sass'),

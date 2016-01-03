@@ -1,42 +1,47 @@
 'use strict';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { renderToStaticMarkup } from 'react-dom/server'
-import { createHistory } from 'history'
-import { Router, match, RoutingContext } from 'react-router'
-import Helmet from 'react-helmet'
-import Routes from './Routes'
-import Provider from './Provider'
-import Root from './components/Root'
-import NoMatch from './components/NoMatch'
-import { isClient, getPropsFromRoute } from './utils'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { Router, match, RouterContext, browserHistory } from 'react-router';
+import Helmet from 'react-helmet';
+import routes from './routes';
+import { Provider } from 'react-redux';
+import Root from './containers/Root';
+import NoMatch from './containers/NoMatch';
+import { isClient, getPropFromRoute } from './utils';
+import configureStore from './configureStore';
+import { resetStore } from './actions/resetStore';
 
 if (isClient) {
+	const store = configureStore(window.__INITIAL_STATE__);
+
 	ReactDOM.render(
-		<Provider>
-			<Router history={createHistory()}>{Routes}</Router>
+		<Provider store={store}>
+			<Router history={browserHistory}>{routes}</Router>
 		</Provider>,
 		document.getElementById('root')
 	);
 }
 
-function renderComponentWithRoot(Component, componentProps, initialData) {
+function renderComponentWithRoot(Component, componentProps, store) {
 	const componentHtml = renderToStaticMarkup(
-		<Provider initialData={initialData}> 
+		<Provider store={store}> 
 			<Component {...componentProps} />
 		</Provider>
 	);
 
 	const head = Helmet.rewind();
+	const initialState = store.getState();
 
 	return '<!doctype html>\n' + renderToStaticMarkup(
-		<Root content={componentHtml} initialData={initialData} head={head} />
+		<Root content={componentHtml} config={global.CONFIG} initialState={initialState} head={head} />
 	);
 }
 
 function handle404(res) {
-	const wholeHtml = renderComponentWithRoot(NoMatch);;
+	const store = configureStore();
+	const wholeHtml = renderComponentWithRoot(NoMatch, store);
 	res.status(404).send(wholeHtml);
 }
 
@@ -49,29 +54,33 @@ function handleRedirect(res, redirectLocation) {
 }
 
 function handleRoute(res, renderProps) {
+	const allReadyOnActions = getPropFromRoute(renderProps, 'readyOnActions');
+	const { location, params } = renderProps;
+	const store = configureStore();
 
-	const isDeveloping = process.env.NODE_ENV !== 'production';
-	const routeProps = getPropsFromRoute(renderProps, ['requestState']);
+	const unwrappedReadyActions = allReadyOnActions.reduce((allActions, currActions) => 
+		allActions.concat(currActions(store.dispatch, location, params)), []);
 
-	function renderPage(response) {
-		const wholeHtml = renderComponentWithRoot(RoutingContext, renderProps, response);
+	function renderPage() {
+		const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
 		res.status(200).send(wholeHtml);
 	}
 
-	if (routeProps.requestState) {
-		routeProps.requestState().then(renderPage);
+	if (unwrappedReadyActions) {
+		Promise.all(unwrappedReadyActions
+			.map(action => action()))
+			.then(renderPage);
 	} else {
 		renderPage();
 	}
 }
 
-function ServerRouter(req, res) {
-
-	match({ routes: Routes, location: req.url }, (error, redirectLocation, renderProps) => {
+function serverMiddleware(req, res) {
+	match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
 		if (error) {
 			handleError(error);
 		} else if (res, redirectLocation) {
-			handleRedirect(res, redirectLocation)
+			handleRedirect(res, redirectLocation);
 		} else if (renderProps) {
 			handleRoute(res, renderProps);
 		} else {
@@ -80,4 +89,4 @@ function ServerRouter(req, res) {
 	});
 }
 
-export default ServerRouter;
+export default serverMiddleware;
