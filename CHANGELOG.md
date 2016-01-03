@@ -13,5 +13,10 @@
 0.2.2
 	- Fixed server so that is uses babel-core instead of babel (which is deprecated and also not delcared as a dep)
 
-1.0.0
+0.2.3
+	- Make bundle path absolute so it works for deep urls
+
+1.0.0-alpha
 	- Use Redux, the simplicity was nice but to scale a central store to dispatch to makes good sense.
+	- Shared app config.
+	- Data mocking.
