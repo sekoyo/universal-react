@@ -11,6 +11,13 @@ class Root extends Component {
 		}
 	}
 
+	renderConfig() {
+		let innerHtml = `window.CONFIG = ${JSON.stringify(CONFIG)}`;
+		return (
+			<script dangerouslySetInnerHTML={{__html: innerHtml}} />
+		);
+	}
+
 	render() {
 		const isDeveloping = process.env.NODE_ENV !== 'production';
 		const head = this.props.head;
@@ -25,6 +32,7 @@ class Root extends Component {
 				<body>
 					<div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />
 					{this.renderInitialState()}
+					{this.renderConfig()}
 					{head.script.toComponent()}
 					<script src={isDeveloping ? '/bundle.js' : '/bundle.min.js'}></script>
 				</body>

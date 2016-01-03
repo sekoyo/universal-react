@@ -1,41 +1,52 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import { dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import * as UsersActions from '../actions/users';
 
+// @connect(state => { users: state.users })
 class Home extends Component {
 
-	static readyOnActions(dispatch) {
+	static readyOnActions(dispatch, location, params) {
 		return [
-			() => dispatch(UsersActions.fetchUsers())
+			() => dispatch(UsersActions.fetchUsersIfNeeded())
 		];
 	}
 
-	componentDidMount() {
-		if (!this.props.users.list) {
-			this.props.fetchUsers();
-		}
+	componentWillMount() {
+		const { dispatch, location, params } = this.props;
+		
+		Home.readyOnActions(dispatch, location, params)
+			.forEach(action => action());
 	}
 
 	renderUsers() {
-		if (this.props.users.list) {
-			return (
-				<ul>
-					{this.props.users.list.map(user => {
-						return (
-							<li key={user.id}>
-								<a href={`user/${user.id}`}>{user.name}</a>
-							</li>
-						);
-					})}
-				</ul>
-			);
-		} else {
+		const users = this.props.users;
+
+		if (users.readyState === UsersActions.USERS_INVALID ||
+			users.readyState === UsersActions.USERS_FETCHING) {
 			return (
 				<p>Fetching...</p>
 			);
 		}
+
+		if (users.readyState === UsersActions.USERS_FETCH_FAILED) {
+			return (
+				<p>Failed to fetch users</p>
+			);
+		}
+
+		return (
+			<ul>
+				{users.list.map(user => {
+					return (
+						<li key={user.id}>
+							<Link to={`user/${user.id}`}>{user.name}</Link>
+						</li>
+					);
+				})}
+			</ul>
+		);
 	}
 
 	render() {
@@ -55,13 +66,4 @@ function mapStateToProps(state) {
 	};
 }
 
-function mapDispatchToProps(dispatch) {
-	return {
-		fetchUsers: () => dispatch(UsersActions.fetchUsers())
-	};
-}
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Home);
+export default connect(mapStateToProps)(Home);

@@ -1,21 +1,27 @@
-require('babel-core/register')({
-	stage: 0
-});
+require('babel-core/register');
 
 require.extensions['.scss'] = function() {
 	return;
 };
 
-var path = require('path');
-var express = require('express');
-var webpack = require('webpack');
-var webpackMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var config = require('./webpack.config.js');
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const webpack = require('webpack');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config.js');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const server = express();
+
+// Short-circuit the browser's annoying favicon request. You can still
+// specify one as long as it doesn't have this exact name and path.
+server.get('/favicon.ico', function(req, res) {
+	res.writeHead(200, { 'Content-Type': 'image/x-icon' });
+	res.end();
+});
 
 server.use(express.static(path.resolve(__dirname, 'dist')));
 
@@ -24,7 +30,6 @@ if (isDeveloping) {
 
 	server.use(webpackMiddleware(compiler, {
 		publicpath: config.output.publicpath,
-		contentBase: 'app',
 		watch: true,
 		stats: {
 			colors: true,
@@ -41,15 +46,11 @@ if (isDeveloping) {
 	}));
 }
 
-global.ENV = {
-	mockApi: true
-};
+// The client has access to the same global `CONFIG` variable.
+const envConfigPath = './app/config/' + (process.env.NODE_ENV || 'local');
+global.CONFIG = require(envConfigPath).default;
 
-var app = require('./app');
-
-console.log('app:', app);
-
-server.get('*', app.serverMiddleware);
+server.get('*', require('./app').serverMiddleware);
 
 server.listen(port, 'localhost', function onStart(err) {
 	if (err) {

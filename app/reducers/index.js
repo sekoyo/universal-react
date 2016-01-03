@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import resetStore from './resetStore';
 import users from './users';
+import user from './user';
 
 export default combineReducers({
-	resetStore,
-	users
+	users,
+	user
 });

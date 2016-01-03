@@ -10,16 +10,13 @@ module.exports = {
 		path.join(__dirname, 'app/index.js')
 	],
 	output: {
-		path: path.join(__dirname, '/dist/'),
+		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.js'
 	},
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin(),
-		new webpack.DefinePlugin({
-			ENV: require('./app/config/local')
-		})
+		new webpack.NoErrorsPlugin()
 	],
 	module: {
 		loaders: [{
@@ -27,11 +24,8 @@ module.exports = {
 			loader: 'babel-loader',
 			include: path.join(__dirname, 'app'),
 			query: {
-				stage: 0,
-				cacheDirectory: true,
-				plugins: ['react-transform'],
-				extra: {
-					'react-transform': {
+				plugins: [
+					['react-transform', {
 						transforms: [{
 							transform: 'react-transform-hmr',
 							// If you use React Native, pass "react-native" instead:
@@ -39,8 +33,8 @@ module.exports = {
 							// This is important for Webpack HMR:
 							locals: ['module']
 						}]
-					}
-				}
+					}]
+				]
 			}
 		}, {
 			test: /\.scss$/,

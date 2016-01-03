@@ -18,8 +18,7 @@ class App extends Component {
 				/>
 				<nav>
 					<ul>
-						<li><Link to='/'>Home</Link></li>
-						<li><Link to='/users'>Users</Link></li>
+						<li><Link to='/'>Users</Link></li>
 					</ul>
 				</nav>
 				<div className='route-content'>

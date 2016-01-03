@@ -4,48 +4,71 @@ import { dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as UserActions from '../actions/user';
 
+// @connect(state => { user: state.user })
 class User extends Component {
 
 	static readyOnActions(dispatch, location, params) {
-		console.log('params:', params);
 		return [
-			() => dispatch(UserActions.fetchUser(params.id))
+			() => dispatch(UserActions.fetchUserIfNeeded(params.id))
 		];
 	}
 
-	componentDidMount() {
-		if (!this.props.user.user) {
-			this.props.fetchUser();
-		}
+	constructor(props) {
+		super(props);
+
+		const { dispatch, location, params } = this.props;
+
+		User.readyOnActions(dispatch, location, params)
+			.forEach(action => action());
 	}
 
-	renderUsers() {
-		// if (this.props.users.list) {
-		// 	return (
-		// 		<ul>
-		// 			{this.props.users.list.map(user => {
-		// 				return <li key={user.id}>{user.name}</li>
-		// 			})}
-		// 		</ul>
-		// 	);
-		// } else {
-		// 	return (
-		// 		<p>Fetching...</p>
-		// 	);
-		// }
+	getUser() {
+		return this.props.user[this.props.params.id];
+	}
+
+	getPageTitle() {
+		const user = this.getUser();
+		
+		if (!user || user.readyState !== UserActions.USER_FETCHED) {
+			return 'User';
+		}
+
+		return user.data.name;
+	}
+
+	renderUser() {
+		const user = this.getUser();
+
+		if (!user || user.readyState === UserActions.USER_FETCHING) {
+			return (
+				<p>Fetching...</p>
+			);
+		}
+
+		if (user.readyState === UserActions.USER_FETCH_FAILED) {
+			return (
+				<p>Failed to fetch user</p>
+			);
+		}
+
+		return (
+			<ul>
+				<li>Name: {user.data.name}</li>
+				<li>Email: {user.data.email}</li>
+			</ul>
+		);
 	}
 
 	render() {
 		return (
 			<div>
 				<Helmet
-					title='User'
+					title={this.getPageTitle()}
 					meta={[
-						{'name': 'description', 'content': 'A list of our users'}
+						{'name': 'description', 'content': 'User Profile'}
 					]}
 				/>
-				<h5>Users:</h5>
-				{this.renderUsers()}
+				{this.renderUser()}
 			</div>
 		);
 	}
@@ -57,13 +80,4 @@ function mapStateToProps(state) {
 	};
 }
 
-function mapDispatchToProps(dispatch) {
-	return {
-		fetchUser: (userId) => dispatch(UserActions.fetchUser(userId))
-	};
-}
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(User);
+export default connect(mapStateToProps)(User);

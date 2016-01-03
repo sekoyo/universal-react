@@ -20,8 +20,12 @@ module.exports = {
 		path.join(__dirname, 'app/index.js')
 	],
 	output: {
-		path: path.join(__dirname, '/dist/'),
+		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.min.js'
+	},
+	resolve: {
+		root: path.join(__dirname, 'app'),
+		extensions: ['.js']
 	},
 	plugins: [
 		new ExtractTextPlugin('style.min.css'),
@@ -34,9 +38,6 @@ module.exports = {
 				warnings: false,
 				screw_ie8: true
 			}
-		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
 		})
 	],
 	module: {

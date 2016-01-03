@@ -10,13 +10,13 @@ import routes from './routes';
 import { Provider } from 'react-redux';
 import Root from './containers/Root';
 import NoMatch from './containers/NoMatch';
-import { isClient, getPropsFromRoute } from './utils';
+import { isClient, getPropFromRoute } from './utils';
 import configureStore from './configureStore';
 import { resetStore } from './actions/resetStore';
 
-const store = configureStore(isClient ? window.__INITIAL_STATE__ : undefined);
-
 if (isClient) {
+	const store = configureStore(window.__INITIAL_STATE__);
+
 	ReactDOM.render(
 		<Provider store={store}>
 			<Router history={createHistory()}>{routes}</Router>
@@ -25,7 +25,7 @@ if (isClient) {
 	);
 }
 
-function renderComponentWithRoot(Component, componentProps) {
+function renderComponentWithRoot(Component, componentProps, store) {
 	const componentHtml = renderToStaticMarkup(
 		<Provider store={store}> 
 			<Component {...componentProps} />
@@ -41,7 +41,8 @@ function renderComponentWithRoot(Component, componentProps) {
 }
 
 function handle404(res) {
-	const wholeHtml = renderComponentWithRoot(NoMatch);
+	const store = configureStore();
+	const wholeHtml = renderComponentWithRoot(NoMatch, store);
 	res.status(404).send(wholeHtml);
 }
 
@@ -54,18 +55,20 @@ function handleRedirect(res, redirectLocation) {
 }
 
 function handleRoute(res, renderProps) {
-	const routeProps = getPropsFromRoute(renderProps, ['readyOnActions']);
+	const allReadyOnActions = getPropFromRoute(renderProps, 'readyOnActions');
+	const { location, params } = renderProps;
+	const store = configureStore();
 
-	store.dispatch(resetStore());
+	const unwrappedReadyActions = allReadyOnActions.reduce((allActions, currActions) => 
+		allActions.concat(currActions(store.dispatch, location, params)), []);
 
 	function renderPage() {
-		const wholeHtml = renderComponentWithRoot(RoutingContext, renderProps);
+		const wholeHtml = renderComponentWithRoot(RoutingContext, renderProps, store);
 		res.status(200).send(wholeHtml);
 	}
 
-	if (routeProps.readyOnActions) {
-		Promise.all(routeProps
-			.readyOnActions(store.dispatch, renderProps.location, renderProps.params)
+	if (unwrappedReadyActions) {
+		Promise.all(unwrappedReadyActions
 			.map(action => action()))
 			.then(renderPage);
 	} else {
