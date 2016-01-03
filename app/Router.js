@@ -3,8 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { createHistory } from 'history';
-import { Router, match, RoutingContext } from 'react-router';
+import { Router, match, RouterContext, browserHistory } from 'react-router';
 import Helmet from 'react-helmet';
 import routes from './routes';
 import { Provider } from 'react-redux';
@@ -19,7 +18,7 @@ if (isClient) {
 
 	ReactDOM.render(
 		<Provider store={store}>
-			<Router history={createHistory()}>{routes}</Router>
+			<Router history={browserHistory}>{routes}</Router>
 		</Provider>,
 		document.getElementById('root')
 	);
@@ -36,7 +35,7 @@ function renderComponentWithRoot(Component, componentProps, store) {
 	const initialState = store.getState();
 
 	return '<!doctype html>\n' + renderToStaticMarkup(
-		<Root content={componentHtml} initialState={initialState} head={head} />
+		<Root content={componentHtml} config={global.CONFIG} initialState={initialState} head={head} />
 	);
 }
 
@@ -63,7 +62,7 @@ function handleRoute(res, renderProps) {
 		allActions.concat(currActions(store.dispatch, location, params)), []);
 
 	function renderPage() {
-		const wholeHtml = renderComponentWithRoot(RoutingContext, renderProps, store);
+		const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
 		res.status(200).send(wholeHtml);
 	}
 
@@ -77,7 +76,7 @@ function handleRoute(res, renderProps) {
 }
 
 function serverMiddleware(req, res) {
-	match({ routes: routes, location: req.url }, (error, redirectLocation, renderProps) => {
+	match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
 		if (error) {
 			handleError(error);
 		} else if (res, redirectLocation) {
@@ -87,7 +86,7 @@ function serverMiddleware(req, res) {
 		} else {
 			handle404(res);
 		}
-	})
+	});
 }
 
 export default serverMiddleware;

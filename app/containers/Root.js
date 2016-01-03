@@ -12,7 +12,7 @@ class Root extends Component {
 	}
 
 	renderConfig() {
-		let innerHtml = `window.CONFIG = ${JSON.stringify(CONFIG)}`;
+		let innerHtml = `window.CONFIG = ${JSON.stringify(this.props.config)}`;
 		return (
 			<script dangerouslySetInnerHTML={{__html: innerHtml}} />
 		);

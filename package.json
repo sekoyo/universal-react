@@ -1,6 +1,6 @@
 {
   "name": "universal-react",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-beta",
   "description": "A universal react starter, with routing, meta, title, and data features",
   "main": "server.js",
   "repository": {
@@ -32,15 +32,15 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "express": "^4.13.3",
-    "fetch-mock": "^3.0.4",
-    "history": "~1.13.x",
+    "fetch-mock": "^4.0.1",
+    "history": "^2.0.0-rc1",
     "isomorphic-fetch": "^2.2.0",
     "object-assign": "^4.0.1",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
+    "react": "^0.14.4",
+    "react-dom": "^0.14.4",
     "react-helmet": "^2.2.0",
     "react-redux": "^4.0.2",
-    "react-router": "^1.0.1",
+    "react-router": "^2.0.0-rc4",
     "redux": "^3.0.5",
     "redux-logger": "^2.3.1",
     "redux-thunk": "^1.0.2"

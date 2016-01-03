@@ -16,16 +16,10 @@ class CleanPlugin {
 }
 
 module.exports = {
-	entry: [
-		path.join(__dirname, 'app/index.js')
-	],
+	entry: path.join(__dirname, 'app/index'),
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.min.js'
-	},
-	resolve: {
-		root: path.join(__dirname, 'app'),
-		extensions: ['.js']
 	},
 	plugins: [
 		new ExtractTextPlugin('style.min.css'),
@@ -44,10 +38,7 @@ module.exports = {
 		loaders: [{
 			test: /\.js?$/,
 			loader: 'babel-loader',
-			include: path.join(__dirname, 'app'),
-			query: {
-				stage: 0
-			}
+			include: path.join(__dirname, 'app')
 		}, {
 			test: /\.scss$/,
 			loader: ExtractTextPlugin.extract('style', 'css', 'sass'),

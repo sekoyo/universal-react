@@ -1,5 +1,5 @@
 /**
- * Gets the first occuring prop from the deepest route.
+ * Gets the first occuring prop(s) from the deepest route.
  * @param  {Array} componentProps Array of props to get.
  * @return {Object} Object with first occuring prop value for each given prop name.
  */
@@ -33,13 +33,3 @@ export function getPropFromRoute({ routes }, componentProp) {
 }
 
 export const isClient = (typeof document !== 'undefined');
-
-export function parseUrl(url) {
-	if (isClient) {
-		var a = document.createElement('a');
-		a.href = url;
-		return a;
-	}
-
-	return require('url').parse(url);
-}
