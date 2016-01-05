@@ -9,18 +9,18 @@ import { isClient } from './utils';
 let createStoreWithMiddleware;
 
 if (isClient) {
-	const loggerMiddleware = createLogger();
+  const loggerMiddleware = createLogger();
 
-	createStoreWithMiddleware = applyMiddleware(
-		loggerMiddleware,
-		thunkMiddleware
-	)(createStore);
+  createStoreWithMiddleware = applyMiddleware(
+    loggerMiddleware,
+    thunkMiddleware
+  )(createStore);
 } else {
-	createStoreWithMiddleware = applyMiddleware(
-		thunkMiddleware
-	)(createStore);
+  createStoreWithMiddleware = applyMiddleware(
+    thunkMiddleware
+  )(createStore);
 }
 
 export default function configureStore(initialState) {
-	return createStoreWithMiddleware(rootReducer, initialState)
+  return createStoreWithMiddleware(rootReducer, initialState)
 };

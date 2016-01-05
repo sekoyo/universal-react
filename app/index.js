@@ -1,7 +1,7 @@
 import 'isomorphic-fetch';
 
 if (CONFIG.mockApi) {
-	require('./mocks');
+  require('./mocks');
 }
 
 export serverMiddleware from './Router';
