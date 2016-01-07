@@ -2,6 +2,7 @@
 This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app while trying to keep the base unopinionated elsewhere and simple to read and extend.
 
 [![Universal React on NPM](https://img.shields.io/npm/v/universal-react.svg)](https://www.npmjs.com/package/universal-react)
+[![Dependency Status](https://david-dm.org/DominicTobias/universal-react.svg)](https://david-dm.org/DominicTobias/universal-react)
 
 ## Features
 
