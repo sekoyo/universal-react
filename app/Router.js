@@ -9,7 +9,7 @@ import routes from './routes';
 import { Provider } from 'react-redux';
 import Root from './containers/Root';
 import NoMatch from './containers/NoMatch';
-import { isClient, getPropFromRoute } from './utils';
+import { isClient, getPropsFromRoute } from './utils';
 import configureStore from './configureStore';
 import { resetStore } from './actions/resetStore';
 
@@ -54,22 +54,19 @@ function handleRedirect(res, redirectLocation) {
 }
 
 function handleRoute(res, renderProps) {
-	const allReadyOnActions = getPropFromRoute(renderProps, 'readyOnActions');
+	const { readyOnActions } = getPropsFromRoute(renderProps, ['readyOnActions']);
 	const { location, params } = renderProps;
 	const store = configureStore();
-
-	const unwrappedReadyActions = allReadyOnActions.reduce((allActions, currActions) => 
-		allActions.concat(currActions(store.dispatch, location, params)), []);
 
 	function renderPage() {
 		const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
 		res.status(200).send(wholeHtml);
 	}
 
-	if (unwrappedReadyActions) {
-		Promise.all(unwrappedReadyActions
-			.map(action => action()))
-			.then(renderPage);
+	if (readyOnActions) {
+		const unwrappedActions = readyOnActions(store.dispatch, location, params)
+			.map(action => action());
+		Promise.all(unwrappedActions).then(renderPage);
 	} else {
 		renderPage();
 	}

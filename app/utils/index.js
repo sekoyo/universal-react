@@ -20,16 +20,4 @@ export function getPropsFromRoute({ routes }, componentProps) {
 	return props;
 }
 
-/**
- * Gets all occurences of a prop in a route from each component.
- * @param  {String} componentProp Prop name.
- * @return {Array} Array of prop values.
- */
-export function getPropFromRoute({ routes }, componentProp) {
-	return routes.reduceRight((propArray, currRoute) => {
-		const prop = currRoute.component[componentProp];
-		return prop ? propArray.concat(prop) : propArray;
-	}, []);
-}
-
 export const isClient = (typeof document !== 'undefined');
