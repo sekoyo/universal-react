@@ -1,6 +1,5 @@
-import assign from 'object-assign';
 import sharedConfig from './shared';
 
-export default assign({
+export default Object.assign({
 	
 }, sharedConfig);

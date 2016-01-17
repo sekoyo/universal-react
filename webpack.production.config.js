@@ -37,8 +37,13 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.js?$/,
-			loader: 'babel-loader',
-			include: path.join(__dirname, 'app')
+			loader: 'babel',
+			include: path.join(__dirname, 'app'),
+			query: {
+				plugins: [
+					['transform-object-assign']
+				]
+			}
 		}, {
 			test: /\.scss$/,
 			loader: ExtractTextPlugin.extract('style', 'css', 'sass'),
