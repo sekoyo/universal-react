@@ -59,7 +59,7 @@ You can store app settings under `app/config/`. These are available under the gl
 
 Read the [Redux](https://rackt.github.io/redux/) guide if you are new to redux. Write Redux actions and stores as normal, and if the action creator is asynchronous then it should return a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (or a [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)) in the inner function.
 
-On a router container you need to declare the actions in an array that must be executed in order for the container to be ready:
+On a container you need to declare the actions in an array that must be executed in order for it to be ready:
 
 ```js
 static readyOnActions(dispatch, location, params) {
