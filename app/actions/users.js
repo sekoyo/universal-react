@@ -7,7 +7,7 @@ function fetchUsers() {
 	return (dispatch) => {
 		dispatch({ type: USERS_FETCHING });
 
-		return fetch(CONFIG.API.users)
+		return fetch(CONFIG.apiBase + CONFIG.api.users)
 			.then(response => {
 				return response.json();
 			})

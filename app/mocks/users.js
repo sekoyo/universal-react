@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
 
-fetchMock.mock(CONFIG.API.users, 'GET', [{
+fetchMock.mock(CONFIG.apiBase + CONFIG.api.users, 'GET', [{
 	id: 1,
 	name: 'James Blatterdash'
 }, {

@@ -53,7 +53,7 @@ The parent `App.js` defines the base title and meta in a `Helmet` component. Any
 
 ## Config
 
-You can store app settings under `app/config/`. These are available under the global variable `CONFIG`. A file matching `process.env.NODE_ENV` will be loaded, for example `app/config/production.js`. If `process.env.NODE_ENV` is undefined it will fallback to `app/config/local.js`.
+You can store app settings under `app/config/`. These are available under the global variable `CONFIG`. A file matching `process.env.NODE_ENV` will be loaded, for example `app/config/production.js`. If `process.env.NODE_ENV` is undefined it will fallback to `app/config/default.js`.
 
 ## Data fetching and client hydration
 

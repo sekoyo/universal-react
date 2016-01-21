@@ -47,7 +47,7 @@ if (isDeveloping) {
 }
 
 // The client has access to the same global `CONFIG` variable.
-const envConfigPath = './app/config/' + (process.env.NODE_ENV || 'local');
+const envConfigPath = './app/config/' + (process.env.NODE_ENV || 'default');
 global.CONFIG = require(envConfigPath).default;
 
 server.get('*', require('./app').serverMiddleware);

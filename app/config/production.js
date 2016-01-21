@@ -1,5 +1,5 @@
-import sharedConfig from './shared';
+import defaultConfig from './default';
 
 export default Object.assign({
-	
-}, sharedConfig);
+	mockApi: false
+}, defaultConfig);

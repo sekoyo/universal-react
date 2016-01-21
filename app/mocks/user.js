@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
 
-const userWithId = new RegExp(CONFIG.API.user + '\/([^\/]*)');
+const userWithId = new RegExp(CONFIG.apiBase + CONFIG.api.user + '\/([^\/]*)');
 
 const users = {
 	1: {
