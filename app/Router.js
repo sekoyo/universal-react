@@ -11,7 +11,6 @@ import Root from './containers/Root';
 import NoMatch from './containers/NoMatch';
 import { isClient, getPropsFromRoute } from './utils';
 import configureStore from './configureStore';
-import { resetStore } from './actions/resetStore';
 
 if (isClient) {
 	const store = configureStore(window.__INITIAL_STATE__);

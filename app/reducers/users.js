@@ -1,4 +1,3 @@
-import { RESET_STORE } from '../actions/resetStore';
 import {
 	USERS_INVALID,
 	USERS_FETCHING,
