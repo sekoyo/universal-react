@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
-import './scss/App.scss';
 
 class App extends Component {
 
@@ -21,11 +20,9 @@ class App extends Component {
 						<li><Link to='/'>Users</Link></li>
 					</ul>
 				</nav>
-				<div className='route-content'>
-					{this.props.children}
-				</div>
+				{this.props.children}
 			</div>
-		)
+		);
 	}
 }
 

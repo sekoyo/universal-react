@@ -1,3 +1,12 @@
+#### 1.0.0-rc1
+
+	- `readyOnActions` returns a Promise which simplifies calling code
+	- Use Object.assign babel plugin
+	- Remove cruft/simplify
+	- Removed mocking in preference for having a real mock api
+	- Removed css/file loaders as they were too opinionated and not MVP
+	- Refactored app config so it's not a shared global but a shared import
+
 #### 1.0.0-beta
 
 	- Use Redux, the simplicity was nice but to scale a central store to dispatch to makes good sense.

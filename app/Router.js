@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -9,8 +7,9 @@ import routes from './routes';
 import { Provider } from 'react-redux';
 import Root from './containers/Root';
 import NoMatch from './containers/NoMatch';
-import { isClient, getPropsFromRoute } from './utils';
 import configureStore from './configureStore';
+
+const isClient = typeof document !== 'undefined';
 
 if (isClient) {
 	const store = configureStore(window.__INITIAL_STATE__);
@@ -34,13 +33,13 @@ function renderComponentWithRoot(Component, componentProps, store) {
 	const initialState = store.getState();
 
 	return '<!doctype html>\n' + renderToStaticMarkup(
-		<Root content={componentHtml} config={global.CONFIG} initialState={initialState} head={head} />
+		<Root content={componentHtml} initialState={initialState} head={head} />
 	);
 }
 
 function handle404(res) {
 	const store = configureStore();
-	const wholeHtml = renderComponentWithRoot(NoMatch, store);
+	const wholeHtml = renderComponentWithRoot(NoMatch, null, store);
 	res.status(404).send(wholeHtml);
 }
 
@@ -53,22 +52,17 @@ function handleRedirect(res, redirectLocation) {
 }
 
 function handleRoute(res, renderProps) {
-	const { readyOnActions } = getPropsFromRoute(renderProps, ['readyOnActions']);
-	const { location, params } = renderProps;
 	const store = configureStore();
 
-	function renderPage() {
-		const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
-		res.status(200).send(wholeHtml);
-	}
+	const readyOnAllActions = renderProps.components.map((component) => {
+        return component.readyOnActions ?
+        	component.readyOnActions(store.dispatch, renderProps.params) : false;
+    });
 
-	if (readyOnActions) {
-		const unwrappedActions = readyOnActions(store.dispatch, location, params)
-			.map(action => action());
-		Promise.all(unwrappedActions).then(renderPage);
-	} else {
-		renderPage();
-	}
+    Promise.all(readyOnAllActions).then(() => {
+    	const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
+		res.status(200).send(wholeHtml);
+    });
 }
 
 function serverMiddleware(req, res) {

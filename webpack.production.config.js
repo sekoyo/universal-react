@@ -3,7 +3,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var del = require('del');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 class CleanPlugin {
 	constructor(options) {
@@ -19,10 +18,9 @@ module.exports = {
 	entry: './app/index',
 	output: {
 		path: path.join(__dirname, 'dist'),
-		filename: 'bundle.min.js'
+		filename: 'app.min.js'
 	},
 	plugins: [
-		new ExtractTextPlugin('style.min.css'),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new CleanPlugin({
 			files: ['dist/*']
@@ -44,14 +42,6 @@ module.exports = {
 					['transform-object-assign']
 				]
 			}
-		}, {
-			test: /\.scss$/,
-			loader: ExtractTextPlugin.extract('style', 'css', 'sass'),
-			include: path.join(__dirname, 'app')
-		},  {
-			test: /\.(jpe?g|png|eot|woff|ttf|gif|svg)(\?.*)?$/i,
-			loader: 'file-loader',
-			include: path.join(__dirname, 'app')
 		}]
 	}
 };

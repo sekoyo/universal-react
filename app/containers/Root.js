@@ -4,22 +4,17 @@ class Root extends Component {
 
 	renderInitialState() {
 		if (this.props.initialState) {
-			let innerHtml = `window.__INITIAL_STATE__ = ${JSON.stringify(this.props.initialState)}`;
-			return (
-				<script dangerouslySetInnerHTML={{__html: innerHtml}} />
-			);
+			const innerHtml = `window.__INITIAL_STATE__ = ${JSON.stringify(this.props.initialState)}`;
+			return <script dangerouslySetInnerHTML={{__html: innerHtml}} />;
 		}
 	}
 
-	renderConfig() {
-		let innerHtml = `window.CONFIG = ${JSON.stringify(this.props.config)}`;
-		return (
-			<script dangerouslySetInnerHTML={{__html: innerHtml}} />
-		);
+	renderEnvironment() {
+		const innerHtml = `window.__ENVIRONMENT__ = '${__ENVIRONMENT__}'`;
+		return <script dangerouslySetInnerHTML={{__html: innerHtml}} />
 	}
 
 	render() {
-		const isLocal = process.env.NODE_ENV === undefined;
 		const head = this.props.head;
 		
 		return (
@@ -28,14 +23,13 @@ class Root extends Component {
 					{head.title.toComponent()}
 					{head.meta.toComponent()}
 					{head.link.toComponent()}
-					{!isLocal && <link rel='stylesheet' type='text/css' href='/style.min.css' />}
 				</head>
 				<body>
 					<div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />
+					{this.renderEnvironment()}
 					{this.renderInitialState()}
-					{this.renderConfig()}
 					{head.script.toComponent()}
-					<script src={isLocal ? '/bundle.js' : '/bundle.min.js'}></script>
+					<script src={!process.env.NODE_ENV ? '/app.js' : '/app.min.js'}></script>
 				</body>
 			</html>
 		);

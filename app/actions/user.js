@@ -7,7 +7,7 @@ function fetchUser(userId) {
 	return (dispatch) => {
 		dispatch({ type: USER_FETCHING, userId: userId });
 
-		return fetch(CONFIG.apiBase + CONFIG.api.user + '/' + userId)
+		return fetch('http://jsonplaceholder.typicode.com/users/' + userId)
 			.then(response => {
 				return response.json();
 			})

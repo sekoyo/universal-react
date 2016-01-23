@@ -1,4 +1,5 @@
 # Universal React
+
 This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal app while trying to keep the base unopinionated elsewhere and simple to read and extend.
 
 [![Universal React on NPM](https://img.shields.io/npm/v/universal-react.svg)](https://www.npmjs.com/package/universal-react)
@@ -10,12 +11,13 @@ This boilerplate aims at solving the MVP (Minimal Viable Product) of a universal
 - [Redux](https://rackt.github.io/redux/)
 - Hot reloading
 - Title, meta, css, and scripts overridable by each component [react-helmet](https://github.com/nfl/react-helmet)
-- Universal data fetching/rehydration on the client [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) (and mocking)
+- Universal data fetching/rehydration on the client [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
 - No other templating engines - React from root down
 - 404 and redirect handling
+- Shared app config
 - [Webpack](https://webpack.github.io) and [Babel](https://babeljs.io)
 
-As you're more than likely to want to style your app you can also import scss (see `App.js`). It's easy to add css, less, or whatever you like using a webpack loader.
+Since there are so many opinions on how to use css (vanilla, sass, less, react css modules etc) I've left it up to you.
 
 ## Install & run
 
@@ -53,7 +55,11 @@ The parent `App.js` defines the base title and meta in a `Helmet` component. Any
 
 ## Config
 
-You can store app settings under `app/config/`. These are available under the global variable `CONFIG`. A file matching `process.env.NODE_ENV` will be loaded, for example `app/config/production.js`. If `process.env.NODE_ENV` is undefined it will fallback to `app/config/default.js`.
+You can store app settings under `app/config/`. A file matching `process.env.NODE_ENV` will be loaded, for example `app/config/production.js`. If `process.env.NODE_ENV` is undefined it will fallback to `app/config/default.js`. You can access the correct config with:
+
+```js
+import config from './config';
+```
 
 ## Data fetching and client hydration
 
@@ -62,10 +68,10 @@ Read the [Redux](https://rackt.github.io/redux/) guide if you are new to redux. 
 On a container you need to declare the actions in an array that must be executed in order for it to be ready:
 
 ```js
-static readyOnActions(dispatch, location, params) {
-	return [
-		() => dispatch(UserActions.fetchUserIfNeeded(params.id))
-	];
+static readyOnActions(dispatch, params) {
+	return return Promise.all([
+		dispatch(UserActions.fetchUserIfNeeded(params.id))
+	]);
 }
 ```
 
@@ -73,13 +79,6 @@ You should also invoke the actions in `componentDidMount` (or the constructor or
 
 ```js
 componentWillMount() {
-	const { dispatch, location, params } = this.props;
-
-	User.readyOnActions(dispatch, location, params)
-		.forEach(action => action());
+	User.readyOnActions(this.props.dispatch, this.props.params);
 }
 ```
-
-## Pre Redux
-
-Version [0.2.3](https://github.com/DominicTobias/universal-react/releases/tag/0.2.3) is a simpler isomorphic base which doesn't implement redux. If you're interested in that [have a look at the source](https://github.com/DominicTobias/universal-react/tree/73a61c1c554684583d080f5496ed21b78c62f1a0).

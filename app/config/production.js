@@ -1,5 +1,7 @@
 import defaultConfig from './default';
 
-export default Object.assign({
-	mockApi: false
-}, defaultConfig);
+const config = {
+	greeting: 'Hello, this app is running with production settings'
+};
+
+export default Object.assign({}, defaultConfig, config);

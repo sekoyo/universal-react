@@ -1,2 +1,0 @@
-import './users';
-import './user';

@@ -1,8 +1,3 @@
 export default {
-	mockApi: true,
-	apiBase: 'https://myapi.com/v1/',
-	api: {
-		users: 'users',
-		user: 'user'
-	}
+	greeting: 'Hello, this app is running with default settings'
 };

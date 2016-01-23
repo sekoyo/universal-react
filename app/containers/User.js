@@ -3,44 +3,29 @@ import Helmet from 'react-helmet';
 import { dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as UserActions from '../actions/user';
-import UserCard from '../components/UserCard';
-import LoadingIndicator from '../components/LoadingIndicator';
 
 // @connect(state => { user: state.user })
 class User extends Component {
 
-	static readyOnActions(dispatch, location, params) {
-		return [
-			() => dispatch(UserActions.fetchUserIfNeeded(params.id))
-		];
+	static readyOnActions(dispatch, params) {
+		return Promise.all([
+			dispatch(UserActions.fetchUserIfNeeded(params.id))
+		]);
 	}
 
 	componentWillMount() {
-		const { dispatch, location, params } = this.props;
-
-		User.readyOnActions(dispatch, location, params)
-			.forEach(action => action());
+		User.readyOnActions(this.props.dispatch, this.props.params);
 	}
 
 	getUser() {
 		return this.props.user[this.props.params.id];
 	}
 
-	getPageTitle() {
-		const user = this.getUser();
-		
-		if (!user || user.readyState !== UserActions.USER_FETCHED) {
-			return 'User';
-		}
-
-		return user.data.name;
-	}
-
 	renderUser() {
 		const user = this.getUser();
 
 		if (!user || user.readyState === UserActions.USER_FETCHING) {
-			return <LoadingIndicator />;
+			return 'Loading...';
 		}
 
 		if (user.readyState === UserActions.USER_FETCH_FAILED) {
@@ -49,14 +34,19 @@ class User extends Component {
 			);
 		}
 
-		return <UserCard user={user.data} />;
+		return (
+			<ul>
+				<li>Name: {user.name}</li>
+				<li>Email: {user.email}</li>
+			</ul>
+		);
 	}
 
 	render() {
 		return (
 			<div>
 				<Helmet
-					title={this.getPageTitle()}
+					title={this.getUser() ? this.getUser().name : ''}
 					meta={[
 						{'name': 'description', 'content': 'User Profile'}
 					]}

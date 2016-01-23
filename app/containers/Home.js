@@ -3,22 +3,18 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as UsersActions from '../actions/users';
-import LoadingIndicator from '../components/LoadingIndicator';
 
 // @connect(state => { users: state.users })
 class Home extends Component {
 
-	static readyOnActions(dispatch, location, params) {
-		return [
-			() => dispatch(UsersActions.fetchUsersIfNeeded())
-		];
+	static readyOnActions(dispatch) {
+		return Promise.all([
+			dispatch(UsersActions.fetchUsersIfNeeded())
+		]);
 	}
 
 	componentWillMount() {
-		const { dispatch, location, params } = this.props;
-		
-		Home.readyOnActions(dispatch, location, params)
-			.forEach(action => action());
+		Home.readyOnActions(this.props.dispatch);
 	}
 
 	renderUsers() {
@@ -26,7 +22,7 @@ class Home extends Component {
 
 		if (users.readyState === UsersActions.USERS_INVALID ||
 			users.readyState === UsersActions.USERS_FETCHING) {
-			return <LoadingIndicator />;
+			return <p>Loading...</p>;
 		}
 
 		if (users.readyState === UsersActions.USERS_FETCH_FAILED) {
