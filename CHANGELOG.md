@@ -1,4 +1,4 @@
-#### 1.0.0-rc1
+#### 1.0.0-rc1 (in progress, unreleased)
 
 	- `readyOnActions` returns a Promise which simplifies calling code
 	- Use Object.assign babel plugin
