@@ -12,6 +12,7 @@
 	- Use Redux, the simplicity was nice but to scale a central store to dispatch to makes good sense.
 	- Shared app config.
 	- Data mocking.
+	- Upgrade to Babel6, react-router2
 
 #### 0.2.3
 
