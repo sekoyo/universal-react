@@ -1,4 +1,4 @@
-#### 1.0.0-rc1 (not released yet, WIP)
+#### 1.0.0-rc1 (in progress, unreleased)
 
 	- Stop app errors during server-side render from being silently swallowed in a promise
 	- `readyOnActions` returns a Promise which simplifies calling code
@@ -13,6 +13,7 @@
 	- Use Redux, the simplicity was nice but to scale a central store to dispatch to makes good sense.
 	- Shared app config.
 	- Data mocking.
+	- Upgrade to Babel6, react-router2
 
 #### 0.2.3
 
