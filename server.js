@@ -11,6 +11,16 @@ const port = process.env.PORT || 3000;
 const server = express();
 global.__ENVIRONMENT__ = process.env.NODE_ENV || 'default';
 
+// Otherwise errors thrown in Promise routines will be silently swallowed.
+// (e.g. any error during rendering the app server-side!)
+process.on('unhandledRejection', (reason, p) => {
+	if (reason.stack) {
+		console.error(reason.stack);
+	} else {
+		console.error('Unhandled Rejection at: Promise ', p, ' reason: ', reason);
+	}
+});
+
 // Short-circuit the browser's annoying favicon request. You can still
 // specify one as long as it doesn't have this exact name and path.
 server.get('/favicon.ico', function(req, res) {
@@ -39,7 +49,7 @@ if (!process.env.NODE_ENV) {
 
 server.get('*', require('./app').serverMiddleware);
 
-server.listen(port, 'localhost', function onStart(err) {
+server.listen(port, 'localhost', (err) => {
 	if (err) {
 		console.error(err);
 	}

@@ -1,5 +1,6 @@
-#### 1.0.0-rc1
+#### 1.0.0-rc1 (not released yet, WIP)
 
+	- Stop app errors during server-side render from being silently swallowed in a promise
 	- `readyOnActions` returns a Promise which simplifies calling code
 	- Use Object.assign babel plugin
 	- Remove cruft/simplify

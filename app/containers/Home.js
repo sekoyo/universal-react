@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as UsersActions from '../actions/users';
+import UserList from '../components/UserList';
 
 // @connect(state => { users: state.users })
 class Home extends Component {
@@ -26,22 +27,10 @@ class Home extends Component {
 		}
 
 		if (users.readyState === UsersActions.USERS_FETCH_FAILED) {
-			return (
-				<p>Failed to fetch users</p>
-			);
+			return <p>Failed to fetch users</p>;
 		}
 
-		return (
-			<ul>
-				{users.list.map(user => {
-					return (
-						<li key={user.id}>
-							<Link to={`user/${user.id}`}>{user.name}</Link>
-						</li>
-					);
-				})}
-			</ul>
-		);
+		return <UserList users={users.list} />;
 	}
 
 	render() {

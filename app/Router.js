@@ -55,14 +55,15 @@ function handleRoute(res, renderProps) {
 	const store = configureStore();
 
 	const readyOnAllActions = renderProps.components.map((component) => {
-        return component.readyOnActions ?
-        	component.readyOnActions(store.dispatch, renderProps.params) : false;
-    });
+		return component.readyOnActions ?
+			component.readyOnActions(store.dispatch, renderProps.params) : false;
+	});
 
-    Promise.all(readyOnAllActions).then(() => {
-    	const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
-		res.status(200).send(wholeHtml);
-    });
+	Promise.all(readyOnAllActions)
+		.then(() => {
+			const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
+			res.status(200).send(wholeHtml);
+		});
 }
 
 function serverMiddleware(req, res) {
