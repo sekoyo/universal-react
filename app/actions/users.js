@@ -12,8 +12,8 @@ function fetchUsers() {
 				return response.json();
 			})
 			.then(
-				result => dispatch({ type: USERS_FETCHED, result }),
-				error => dispatch({ type: USERS_FETCH_FAILED, error })
+				(result) => dispatch({ type: USERS_FETCHED, result }),
+				(error) => dispatch({ type: USERS_FETCH_FAILED, error })
 			);
 	}
 }

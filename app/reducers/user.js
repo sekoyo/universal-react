@@ -22,9 +22,10 @@ export default function user(state = {}, action) {
 			});
 		case USER_FETCHED:
 			return Object.assign({}, state, {
-				[action.userId]: Object.assign({
-					readyState: USER_FETCHED
-				}, action.result)
+				[action.userId]: {
+					readyState: USER_FETCHED,
+					info: action.result
+				}
 			});
 		default:
 			return state;

@@ -14,7 +14,7 @@ class User extends Component {
 		]);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		User.readyOnActions(this.props.dispatch, this.props.params);
 	}
 
@@ -33,7 +33,7 @@ class User extends Component {
 			return <p>Failed to fetch user</p>;
 		}
 
-		return <UserCard user={user} />;
+		return <UserCard user={user.info} />;
 	}
 
 	render() {

@@ -75,10 +75,10 @@ static readyOnActions(dispatch, params) {
 }
 ```
 
-You should also invoke the actions in `componentDidMount` (or the constructor or `componentWillMount`). This ensures that if the component is reached on the client, then the same actions will be invoked:
+You should also invoke the actions in `componentDidMount`. This ensures that if the component is reached on the client, then the same actions will be invoked:
 
 ```js
-componentWillMount() {
+componentDidMount() {
 	User.readyOnActions(this.props.dispatch, this.props.params);
 }
 ```

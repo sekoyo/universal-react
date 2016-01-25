@@ -1,4 +1,4 @@
-#### 1.0.0-rc1 (in progress, unreleased)
+#### 1.0.0-rc1
 
 	- Hot reloading for reducers
 	- Stop app errors during server-side render from being silently swallowed in a promise
@@ -8,6 +8,7 @@
 	- Removed mocking in preference for having a real mock api
 	- Removed css/file loaders as they were too opinionated and not MVP
 	- Refactored app config so it's not a shared global but a shared import
+	- Use `componentDidMount` for `readyOnAction` calling as `componentWillMount` can leave the store in a half-way state when sent to the client
 
 #### 1.0.0-beta
 

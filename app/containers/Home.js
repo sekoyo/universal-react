@@ -14,7 +14,7 @@ class Home extends Component {
 		]);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		Home.readyOnActions(this.props.dispatch);
 	}
 
