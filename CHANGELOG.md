@@ -1,5 +1,6 @@
 #### 1.0.0-rc1 (in progress, unreleased)
 
+	- Hot reloading for reducers
 	- Stop app errors during server-side render from being silently swallowed in a promise
 	- `readyOnActions` returns a Promise which simplifies calling code
 	- Use Object.assign babel plugin
