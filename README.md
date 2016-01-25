@@ -65,7 +65,7 @@ import config from './config';
 
 Read the [Redux](https://rackt.github.io/redux/) guide if you are new to redux. Write Redux actions and stores as normal, and if the action creator is asynchronous then it should return a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) (or a [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)) in the inner function.
 
-On a container you need to declare the actions in an array that must be executed in order for it to be ready:
+You should write dispatches for actions that must be called for the container to be ready:
 
 ```js
 static readyOnActions(dispatch, params) {
@@ -75,7 +75,7 @@ static readyOnActions(dispatch, params) {
 }
 ```
 
-You should also invoke the actions in `componentDidMount`. This ensures that if the component is reached on the client, then the same actions will be invoked:
+You should also invoke the actions in `componentDidMount`. This ensures that if the component is reached on the client, then the same actions will be invoked. It's up to the action to figure out if fetches for data need to be made or not:
 
 ```js
 componentDidMount() {
