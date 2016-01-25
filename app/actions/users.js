@@ -8,7 +8,7 @@ function fetchUsers() {
 		dispatch({ type: USERS_FETCHING });
 
 		return fetch('http://jsonplaceholder.typicode.com/users')
-			.then(response => {
+			.then((response) => {
 				return response.json();
 			})
 			.then(
