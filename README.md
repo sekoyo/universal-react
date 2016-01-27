@@ -39,7 +39,7 @@ This will create a `dist/` folder with a `app.min.js` which will be used on any 
 npm run start-prod
 ```
 
-This will build and then run your app with environment set to production, so that `app.min.js` and `config/production.js` is used.
+This will build and then run your app with environment set to production, so that `app.min.js` and `config/production.js` are used.
 
 ## Adding routes
 
