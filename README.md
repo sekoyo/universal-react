@@ -69,7 +69,7 @@ You should write dispatches for actions that must be called for the container to
 
 ```js
 static readyOnActions(dispatch, params) {
-	return return Promise.all([
+	return Promise.all([
 		dispatch(UserActions.fetchUserIfNeeded(params.id))
 	]);
 }
