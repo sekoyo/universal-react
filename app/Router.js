@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Router, match, RouterContext, browserHistory } from 'react-router';
 import Helmet from 'react-helmet';
-import routes from './routes';
+import routes from './Routes';
 import { Provider } from 'react-redux';
 import Root from './containers/Root';
 import NoMatch from './containers/NoMatch';
