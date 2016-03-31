@@ -48,9 +48,9 @@ function handleRedirect(res, redirectLocation) {
 function handleRoute(res, renderProps) {
 	const store = configureStore();
 
-	const readyOnAllActions = renderProps.components.map((component) => 
-		component.readyOnActions ?
-			component.readyOnActions(store.dispatch, renderProps.params) : false);
+	const readyOnAllActions = renderProps.components
+		.filter((component) => component.readyOnActions)
+		.map((component) => component.readyOnActions(store.dispatch, renderProps.params));
 
 	Promise
 		.all(readyOnAllActions)
