@@ -37,12 +37,6 @@ function renderComponentWithRoot(Component, componentProps, store) {
 	);
 }
 
-function handle404(res) {
-	const store = configureStore();
-	const wholeHtml = renderComponentWithRoot(NoMatch, null, store);
-	res.status(404).send(wholeHtml);
-}
-
 function handleError(res, error) {
 	res.status(500).send(error.message);
 }
@@ -54,16 +48,18 @@ function handleRedirect(res, redirectLocation) {
 function handleRoute(res, renderProps) {
 	const store = configureStore();
 
-	const readyOnAllActions = renderProps.components.map((component) => {
-		return component.readyOnActions ?
-			component.readyOnActions(store.dispatch, renderProps.params) : false;
-	});
+	const readyOnAllActions = renderProps.components.map((component) => 
+		component.readyOnActions ?
+			component.readyOnActions(store.dispatch, renderProps.params) : false);
 
-	Promise.all(readyOnAllActions)
-		.then(() => {
-			const wholeHtml = renderComponentWithRoot(RouterContext, renderProps, store);
-			res.status(200).send(wholeHtml);
-		});
+	Promise
+		.all(readyOnAllActions)
+		.then(() => res.status(200).send(renderComponentWithRoot(RouterContext, renderProps, store)));
+}
+
+function handle404(res) {
+	const store = configureStore();
+	res.status(404).send(renderComponentWithRoot(NoMatch, null, store));
 }
 
 function serverMiddleware(req, res) {
