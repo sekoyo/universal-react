@@ -70,7 +70,7 @@ function serverMiddleware(req, res) {
 	match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
 		if (error) {
 			handleError(error);
-		} else if (res, redirectLocation) {
+		} else if (redirectLocation) {
 			handleRedirect(res, redirectLocation);
 		} else if (renderProps) {
 			handleRoute(res, renderProps);
