@@ -1,3 +1,7 @@
+#### 1.0.0-rc2
+
+As of this version release notes can be found at [Releases](https://github.com/DominicTobias/universal-react/releases)
+
 #### 1.0.0-rc1
 
 	- Hot reloading for reducers
