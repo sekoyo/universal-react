@@ -50,7 +50,7 @@
     "babel-plugin-transform-object-assign": "^6.5.0",
     "del": "^2.2.0",
     "react-transform-hmr": "^1.0.4",
-    "webpack": "^1.12.14",
+    "webpack": "^2.1.0-beta.5",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"
   }

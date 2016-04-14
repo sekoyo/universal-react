@@ -21,7 +21,7 @@ module.exports = {
 		filename: 'app.min.js'
 	},
 	plugins: [
-		new webpack.optimize.OccurenceOrderPlugin(),
+		new webpack.optimize.OccurrenceOrderPlugin(),
 		new CleanPlugin({
 			files: ['dist/*']
 		}),
