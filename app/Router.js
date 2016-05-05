@@ -24,7 +24,7 @@ if (isClient) {
 
 function renderComponentWithRoot(Component, componentProps, store) {
 	const componentHtml = renderToStaticMarkup(
-		<Provider store={store}> 
+		<Provider store={store}>
 			<Component {...componentProps} />
 		</Provider>
 	);
@@ -45,9 +45,7 @@ function handleRedirect(res, redirectLocation) {
 	res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 }
 
-function handleRoute(res, renderProps) {
-	const store = configureStore();
-
+function handleRoute(res, renderProps, store) {
 	const readyOnAllActions = renderProps.components
 		.filter((component) => component.readyOnActions)
 		.map((component) => component.readyOnActions(store.dispatch, renderProps.params));
@@ -57,21 +55,22 @@ function handleRoute(res, renderProps) {
 		.then(() => res.status(200).send(renderComponentWithRoot(RouterContext, renderProps, store)));
 }
 
-function handle404(res) {
-	const store = configureStore();
+function handle404(res, store) {
 	res.status(404).send(renderComponentWithRoot(NoMatch, null, store));
 }
 
 function serverMiddleware(req, res) {
+	const store = configureStore();
+
 	match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
 		if (error) {
 			handleError(error);
 		} else if (redirectLocation) {
 			handleRedirect(res, redirectLocation);
 		} else if (renderProps) {
-			handleRoute(res, renderProps);
+			handleRoute(res, renderProps, store);
 		} else {
-			handle404(res);
+			handle404(res, store);
 		}
 	});
 }
