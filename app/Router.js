@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 import routes from './Routes';
 import { Provider } from 'react-redux';
 import Root from './containers/Root';
-import NoMatch from './containers/NoMatch';
 import configureStore from './configureStore';
 
 const isClient = typeof document !== 'undefined';
