@@ -6,7 +6,7 @@ import User from './containers/User';
 import NoMatch from './containers/NoMatch';
 
 export default (
-	<Route path='/' component={App}>
+	<Route component={App}>
 		<IndexRoute component={Home} />
 		<Route path='user/:id' component={User} />
 		<Route path="*" component={NoMatch} />
