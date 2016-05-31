@@ -18,7 +18,8 @@ module.exports = {
 	entry: './app/index',
 	output: {
 		path: path.join(__dirname, 'dist'),
-		filename: 'app.min.js'
+		filename: 'app.min.js',
+		publicPath: '/'
 	},
 	plugins: [
 		new webpack.optimize.OccurrenceOrderPlugin(),
@@ -32,9 +33,9 @@ module.exports = {
 			}
 		}),
 		new webpack.DefinePlugin({
-		      	'process.env':{
-		        	'NODE_ENV': JSON.stringify('production')
-		      	}
+			'process.env':{
+				'NODE_ENV': JSON.stringify('production')
+			}
 		})
 	],
 	module: {

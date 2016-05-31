@@ -49,7 +49,7 @@ if (!process.env.NODE_ENV) {
 
 server.get('*', require('./app').serverMiddleware);
 
-server.listen(port, 'localhost', (err) => {
+server.listen(port, (err) => {
 	if (err) {
 		console.error(err);
 	}
