@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import { dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as UserActions from '../actions/user';
 import UserCard from '../components/UserCard';
