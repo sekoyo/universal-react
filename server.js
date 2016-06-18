@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const dev = require('webpack-dev-middleware');
 const hot = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
+const compression = require('compression');
 
 const port = process.env.PORT || 3000;
 const server = express();
@@ -28,6 +29,7 @@ server.get('/favicon.ico', function(req, res) {
   res.end();
 });
 
+server.use(compression());
 server.use(express.static(path.resolve(__dirname, 'dist')));
 
 if (!process.env.NODE_ENV) {
