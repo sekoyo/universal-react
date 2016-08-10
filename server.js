@@ -50,8 +50,6 @@ if (!process.env.NODE_ENV) {
 server.get('*', require('./app').serverMiddleware);
 
 server.listen(port, (err) => {
-  if (err) {
-    console.error(err);
-  }
-  console.info('==> 🌎 Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port);
+  if (err) console.error(err);
+  console.info(`⚡⚡⚡ Server running on http://localhost:${port}/`);
 });
