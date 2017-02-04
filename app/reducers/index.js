@@ -4,5 +4,5 @@ import user from './user';
 
 export default combineReducers({
   users,
-  user
+  user,
 });

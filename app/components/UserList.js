@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-class UserList extends Component {
+const UserList = ({ users }) => (
+  <ul>
+    {users.map(user => (
+      <li key={user.id}>
+        <Link to={`user/${user.id}`}>{user.name}</Link>
+      </li>
+    ))}
+  </ul>
+);
 
-  render() {
-    return (
-      <ul>
-        {this.props.users.map((user) => {
-          return (
-            <li key={user.id}>
-              <Link to={`user/${user.id}`}>{user.name}</Link>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
-}
+UserList.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
+};
 
 export default UserList;

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 require('babel-core/register');
 
 const path = require('path');
@@ -9,21 +10,18 @@ const config = require('./webpack.config.js');
 
 const port = process.env.PORT || 3000;
 const server = express();
-global.__ENVIRONMENT__ = process.env.NODE_ENV || 'default';
+global.ENVIRONMENT = process.env.NODE_ENV || 'default';
 
 // Otherwise errors thrown in Promise routines will be silently swallowed.
 // (e.g. any error during rendering the app server-side!)
 process.on('unhandledRejection', (reason, p) => {
-  if (reason.stack) {
-    console.error(reason.stack);
-  } else {
-    console.error('Unhandled Rejection at: Promise ', p, ' reason: ', reason);
-  }
+  if (reason.stack) console.error(reason.stack);
+  else console.error('Unhandled Rejection at: Promise ', p, ' reason: ', reason);
 });
 
 // Short-circuit the browser's annoying favicon request. You can still
 // specify one as long as it doesn't have this exact name and path.
-server.get('/favicon.ico', function(req, res) {
+server.get('/favicon.ico', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'image/x-icon' });
   res.end();
 });
@@ -41,8 +39,8 @@ if (!process.env.NODE_ENV) {
       timings: true,
       chunks: false,
       chunkModules: false,
-      modules: false
-    }
+      modules: false,
+    },
   }));
   server.use(hot(compiler));
 }
@@ -50,6 +48,9 @@ if (!process.env.NODE_ENV) {
 server.get('*', require('./app').serverMiddleware);
 
 server.listen(port, (err) => {
-  if (err) console.error(err);
+  if (err) {
+    console.error(err);
+    return;
+  }
   console.info(`⚡⚡⚡ Server running on http://localhost:${port}/`);
 });

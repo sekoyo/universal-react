@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React, { PropTypes, PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import * as UserActions from '../actions/user';
 import UserCard from '../components/UserCard';
 
-// @connect(state => { user: state.user })
-class User extends Component {
+class User extends PureComponent {
 
   static readyOnActions(dispatch, params) {
     return Promise.all([
-      dispatch(UserActions.fetchUserIfNeeded(params.id))
+      dispatch(UserActions.fetchUserIfNeeded(params.id)),
     ]);
   }
 
@@ -39,9 +38,9 @@ class User extends Component {
     return (
       <div>
         <Helmet
-          title={this.getUser() ? this.getUser().name : ''}
+          title={this.getUser().name || ''}
           meta={[
-            {'name': 'description', 'content': 'User Profile'}
+            { name: 'description', content: 'User Profile' },
           ]}
         />
         {this.renderUser()}
@@ -50,10 +49,20 @@ class User extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
+User.defaultProps = {
+  user: null,
+};
+
+User.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  params: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  user: PropTypes.shape({}),
+};
+
+const mapStateToProps = ({ user }) => ({
+  user,
+});
 
 export default connect(mapStateToProps)(User);

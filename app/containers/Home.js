@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React, { PropTypes, PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import * as UsersActions from '../actions/users';
 import UserList from '../components/UserList';
 
-// @connect(state => { users: state.users })
-class Home extends Component {
+class Home extends PureComponent {
 
   static readyOnActions(dispatch) {
     return Promise.all([
-      dispatch(UsersActions.fetchUsersIfNeeded())
+      dispatch(UsersActions.fetchUsersIfNeeded()),
     ]);
   }
 
@@ -36,18 +34,23 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Helmet title='Home' />
-        <h5>Users:</h5>
+        <Helmet title="Home" />
         {this.renderUsers()}
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    users: state.users
-  };
-}
+Home.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  users: PropTypes.shape({
+    readyState: PropTypes.string.isRequired,
+    list: PropTypes.array.isRequired,
+  }).isRequired,
+};
+
+const mapStateToProps = ({ users }) => ({
+  users,
+});
 
 export default connect(mapStateToProps)(Home);

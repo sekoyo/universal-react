@@ -1,23 +1,24 @@
+/* global window, document */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Router, match, RouterContext, browserHistory } from 'react-router';
 import Helmet from 'react-helmet';
-import routes from './Routes';
 import { Provider } from 'react-redux';
+import routes from './Routes';
 import Root from './containers/Root';
 import configureStore from './configureStore';
 
 const isClient = typeof document !== 'undefined';
 
 if (isClient) {
-  const store = configureStore(window.__INITIAL_STATE__);
+  const store = configureStore(window.INITIAL_STATE);
 
   ReactDOM.render(
     <Provider store={store}>
       <Router history={browserHistory}>{routes}</Router>
     </Provider>,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
 }
 
@@ -25,15 +26,16 @@ function renderComponentWithRoot(Component, componentProps, store) {
   const componentHtml = renderToStaticMarkup(
     <Provider store={store}>
       <Component {...componentProps} />
-    </Provider>
+    </Provider>,
   );
 
   const head = Helmet.rewind();
   const initialState = store.getState();
-
-  return '<!doctype html>\n' + renderToStaticMarkup(
-    <Root content={componentHtml} initialState={initialState} head={head} />
+  const rootMarkup = renderToStaticMarkup(
+    <Root content={componentHtml} initialState={initialState} head={head} />,
   );
+
+  return `<!doctype html>\n${rootMarkup}`;
 }
 
 function handleError(res, error) {
@@ -52,12 +54,13 @@ function handleRoute(res, renderProps) {
   const store = configureStore();
   const status = routeIsUnmatched(renderProps) ? 404 : 200;
   const readyOnAllActions = renderProps.components
-    .filter((component) => component.readyOnActions)
-    .map((component) => component.readyOnActions(store.dispatch, renderProps.params));
+    .filter(component => component.readyOnActions)
+    .map(component => component.readyOnActions(store.dispatch, renderProps.params));
 
   Promise
     .all(readyOnAllActions)
-    .then(() => res.status(status).send(renderComponentWithRoot(RouterContext, renderProps, store)));
+    .then(() => res.status(status)
+      .send(renderComponentWithRoot(RouterContext, renderProps, store)));
 }
 
 function serverMiddleware(req, res) {

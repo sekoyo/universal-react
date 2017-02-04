@@ -1,43 +1,40 @@
-'use strict';
-
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   devtool: '#source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './app/index.js'
+    './app/index.js',
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'app.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
   module: {
     loaders: [{
       test: /\.js?$/,
-      loader: 'babel',
+      loader: 'babel-loader',
       include: path.join(__dirname, 'app'),
       query: {
         plugins: [
           ['react-transform', {
-            'transforms': [{
+            transforms: [{
               transform: 'react-transform-hmr',
               // If you use React Native, pass 'react-native' instead:
               imports: ['react'],
               // This is important for Webpack HMR:
-              locals: ['module']
-            }]
+              locals: ['module'],
+            }],
           }],
-          ['transform-object-assign']
-        ]
-      }
-    }]
-  }
+        ],
+      },
+    }],
+  },
 };

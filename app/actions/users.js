@@ -1,3 +1,4 @@
+/* globals fetch */
 export const USERS_INVALID = 'USERS_INVALID';
 export const USERS_FETCHING = 'USERS_FETCHING';
 export const USERS_FETCHED = 'USERS_FETCHED';
@@ -8,17 +9,13 @@ function fetchUsers() {
     dispatch({ type: USERS_FETCHING });
 
     return fetch('http://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then(
-        (result) => dispatch({ type: USERS_FETCHED, result }),
-        (error) => dispatch({ type: USERS_FETCH_FAILED, error })
-      );
-  }
+      .then(res => res.json())
+      .then(result => dispatch({ type: USERS_FETCHED, result }))
+      .catch(error => dispatch({ type: USERS_FETCH_FAILED, error }));
+  };
 }
 
-function shouldFetchUsers(state) {
-  const users = state.users;
-
+function shouldFetchUsers({ users }) {
   if (!users.list ||
     users.readyState === USERS_FETCH_FAILED ||
     users.readyState === USERS_INVALID) {
@@ -33,5 +30,6 @@ export function fetchUsersIfNeeded() {
     if (shouldFetchUsers(getState())) {
       return dispatch(fetchUsers());
     }
-  }
+    return null;
+  };
 }
