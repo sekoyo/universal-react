@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import * as UserActions from '../actions/user';
@@ -31,18 +32,25 @@ class User extends PureComponent {
       return <p>Failed to fetch user</p>;
     }
 
-    return <UserCard user={user.info} />;
+    if (user.readyState === UserActions.USER_FETCHED) {
+      return (
+        <div>
+          <Helmet
+            title={user.info.name || ''}
+            meta={[
+              { name: 'description', content: 'User Profile' },
+            ]}
+          />
+          <UserCard user={user.info} />
+        </div>
+      );
+    }
+    return null;
   }
 
   render() {
     return (
       <div>
-        <Helmet
-          title={this.getUser().name || ''}
-          meta={[
-            { name: 'description', content: 'User Profile' },
-          ]}
-        />
         {this.renderUser()}
       </div>
     );
