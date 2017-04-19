@@ -26,7 +26,8 @@
   "scripts": {
     "start": "node server",
     "start-prod": "npm run build && NODE_ENV=production PORT=3000 node server",
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress"
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress",
+    "test": "eslint app"
   },
   "dependencies": {
     "babel-core": "^6.22.1",
