@@ -1,6 +1,7 @@
 /* globals ENVIRONMENT */
 /* eslint-disable react/no-danger */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function renderInitialState(initialState) {
   const innerHtml = `window.INITIAL_STATE = ${JSON.stringify(initialState)}`;
@@ -36,4 +37,3 @@ Root.propTypes = {
 };
 
 export default Root;
-

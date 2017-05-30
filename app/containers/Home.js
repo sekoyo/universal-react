@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import * as UsersActions from '../actions/users';
@@ -28,7 +29,11 @@ class Home extends PureComponent {
       return <p>Failed to fetch users</p>;
     }
 
-    return <UserList users={users.list} />;
+    if (users.readyState === UsersActions.USERS_FETCHED) {
+      return <UserList users={users.list} />;
+    }
+
+    return null;
   }
 
   render() {
@@ -45,7 +50,7 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   users: PropTypes.shape({
     readyState: PropTypes.string.isRequired,
-    list: PropTypes.array.isRequired,
+    list: PropTypes.array,
   }).isRequired,
 };
 
