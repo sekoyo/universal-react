@@ -70,9 +70,9 @@ You should write dispatches for actions that must be called for the container to
 
 ```js
 static readyOnActions(dispatch, params) {
-	return Promise.all([
-		dispatch(UserActions.fetchUserIfNeeded(params.id))
-	]);
+  return Promise.all([
+    dispatch(UserActions.fetchUserIfNeeded(params.id))
+  ]);
 }
 ```
 
@@ -80,6 +80,6 @@ You should also invoke the actions in `componentDidMount`. This ensures that if 
 
 ```js
 componentDidMount() {
-	User.readyOnActions(this.props.dispatch, this.props.params);
+  User.readyOnActions(this.props.dispatch, this.props.params);
 }
 ```
