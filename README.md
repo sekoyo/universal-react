@@ -47,7 +47,7 @@ This will build and then run your app with environment set to production, so tha
 Add your routes in `Routes.js`.
 
 ```js
-<Route path='users' component={Users} />
+<Route path="users" component={Users} />
 ```
 
 ## Title and Meta
