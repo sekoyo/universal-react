@@ -12,7 +12,7 @@ Features
 - [Redux](https://rackt.github.io/redux/)
 - Hot reloading
 - Title, meta, css, and scripts overridable by each component [react-helmet](https://github.com/nfl/react-helmet)
-- Universal data fetching/rehydration on the client [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
+- Universal data fetching/rehydration on the client [cross-fetch](https://github.com/lquixada/cross-fetch)
 - No other templating engines - React from root down
 - 404 and redirect handling
 - Shared app config
